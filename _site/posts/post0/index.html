@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>The Reactor Core</title>
+        <style media="screen">
+            /* note: not actually a sass file, just using that for syntax highlighting */
+
+
+
+
+/*
+ * main green: #d3fc05
+ * */
+
+body {
+    background: #101010;
+    color: #c8d1b8;
+    font-family: Tahoma, Verdana, sans-serif;
+}
+a {
+    transition: text-shadow 0.5s;
+    color: #d6f1fc;
+}
+a:hover { text-shadow: 0 0 10px #a9cc66; }
+pre { background: #1D1F21; border: 1px solid #5C5C5C; border-radius: 5px; }
+code { background: #1D1F21; }
+blockquote { background: #1D1F21; border-left: 3px solid #d3fc05; }
+table { margin: 1em auto; border-collapse: collapse; }
+table, th, td { border: 1px solid #5C5C5C; }
+tr:hover { background: #1D1F21; }
+th { background: #1D1F21; }
+small { color: #a4a5a2 } /* slightly faded and dimmed version of the body text color */
+.siteTitle a {
+    color: #d3fc05;
+    text-decoration: none;
+    animation-name: radiate;
+    animation-duration: 5s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes radiate {
+    0% { text-shadow: 0 0 2px #a9cc66; }
+    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05}
+    100% { text-shadow: 0 0 2px #a9cc66; }
+}
+.post .content h1{ color: #d3fc05; }
+.post .content h2{ color: #d3fc05; }
+.post .content h3{ color: #d3fc05; }
+.post .content h4{ color: #d3fc05; }
+.post .content h5{ color: #d3fc05; }
+.post .content h6{ color: #d3fc05; }
+.post .title{ color: #d3fc05; }
+.post .content a:hover { color: #d3fc05; }
+.social-link:hover { color: #d3fc05; }
+.nav-item-title:hover { color: #d3fc05; }
+.tag a:hover { color: #d3fc05; }
+.copyright { color: #404040; }
+.poweredby { color: #404040; }
+.poweredby a { color: #404040; }
+.post-preview .title a{ color: #d3fc05; }
+.content-item a:hover{ text-decoration: underline; color: #d3fc05; }
+.post-list .title { color: #d3fc05; }
+.rmore { color: #d3fc05; }
+.terms .term a:hover { text-decoration: underline; color: #d3fc05; }
+
+            .hljs-comment,
+.hljs-quote
+{
+  color: #456b7c; /* darker version of background */
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion
+{
+  color: #5dcdfd; /* faded light blue */
+}
+
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link,
+.hljs-subst
+{
+  color: #35ddff; /* bright aqua */
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition
+{
+  color: #13CE00; /* verdant green */
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-attribute
+{
+  color: #96FF00; /* yellow green */
+}
+
+.hljs-keyword,
+.hljs-selector-tag
+{
+  color: #1ea8fc; /* cerulean */
+}
+
+.hljs
+{
+  display: block;
+  overflow-x: auto;
+  background: #19272d;
+  color: #b6ced8;
+  padding: 0.5em;
+  font-family: "Source Code Pro", "Consolas", monospace;
+}
+
+.hljs-emphasis
+{
+  font-style: italic;
+}
+
+.hljs-strong
+{
+  font-weight: bold;
+}
+
+        </style>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+        <!-- TODO: Throw this in a nav -->
+        <h1 class="siteTitle">
+            <a href="/">The Reactor Core</a>
+        </h1>
+        <div class="post">
+    <div class="title">This is the first post</div>
+    <div class="content"><p>This is my test content</p>
+</div>
+</div>
+
+    </body>
+</html>

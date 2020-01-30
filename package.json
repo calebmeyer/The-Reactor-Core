@@ -1,0 +1,25 @@
+{
+  "name": "the_reactor_core",
+  "version": "1.0.0",
+  "description": "Caleb's personal blog",
+  "main": "_site/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx @11ty/eleventy --input=./source",
+    "start": "npx @11ty/eleventy --input=./source --serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calebmeyer/The-Reactor-Core.git"
+  },
+  "keywords": [],
+  "author": "Caleb Meyer",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/calebmeyer/The-Reactor-Core/issues"
+  },
+  "homepage": "https://github.com/calebmeyer/The-Reactor-Core#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.10.0"
+  }
+}

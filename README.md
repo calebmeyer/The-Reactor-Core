@@ -1,2 +1,1 @@
-# The-Reactor-Core
-Personal Blog
+# Page Header
