@@ -2,6 +2,7 @@
 layout: base.html.liquid
 ---
 <div class="post">
-    <div class="title">{{ pageTitle }}</div>
+    <h2 class="title">{{ pageTitle }}</h2>
+    <small>Published {{ date | date: "%Y-%m-%d" }}</small>
     <div class="content">{{ content }}</div>
 </div>

@@ -1,5 +1,6 @@
 ---
-pageTitle: "Code Test"
+pageTitle: Code Test
+tags: archived
 ---
 
 # Python

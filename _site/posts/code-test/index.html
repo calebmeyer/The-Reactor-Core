@@ -6,18 +6,55 @@
         <style media="screen">
             /* note: not actually a sass file, just using that for syntax highlighting */
 
-
-
-
 /*
  * main green: #d3fc05
- * */
+ */
 
 body {
     background: #101010;
     color: #c8d1b8;
     font-family: Tahoma, Verdana, sans-serif;
+    line-height: 1.4;
+    padding: 50px;
 }
+
+/* Thanks llogiq! */
+.wrapper {
+  width: 860px;
+  margin: 0 auto;
+}
+
+@media print, screen and (max-width: 960px) {
+  div.wrapper {
+    width: auto;
+    margin: 0;
+  }
+}
+
+@media print, screen and (max-width: 720px) {
+  body {
+    word-wrap: break-word;
+  }
+
+  pre, code {
+    word-wrap: normal;
+  }
+}
+
+@media print, screen and (max-width: 480px) {
+  body {
+    padding: 15px;
+  }
+}
+
+@media print {
+  body {
+    padding: 0.4in;
+    font-size: 12pt;
+    color: #444;
+  }
+}
+
 a {
     transition: text-shadow 0.5s;
     color: #d6f1fc;
@@ -31,13 +68,32 @@ table, th, td { border: 1px solid #5C5C5C; }
 tr:hover { background: #1D1F21; }
 th { background: #1D1F21; }
 small { color: #a4a5a2 } /* slightly faded and dimmed version of the body text color */
-.siteTitle a {
+.site-title-wrapper {
+    width: 300px;
+    display: inline-block;
+}
+.site-title {
+    margin: 0;
+}
+.site-title a {
     color: #d3fc05;
     text-decoration: none;
     animation-name: radiate;
     animation-duration: 5s;
     animation-timing-function: ease-out;
     animation-iteration-count: infinite;
+}
+
+.nav {
+    margin: 10px 0;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.nav a {
+    color: #d3fc05;
+    text-decoration: none;
 }
 
 @keyframes radiate {
@@ -51,19 +107,18 @@ small { color: #a4a5a2 } /* slightly faded and dimmed version of the body text c
 .post .content h4{ color: #d3fc05; }
 .post .content h5{ color: #d3fc05; }
 .post .content h6{ color: #d3fc05; }
-.post .title{ color: #d3fc05; }
+.post .title{ color: #d3fc05; margin-bottom: 0; }
 .post .content a:hover { color: #d3fc05; }
 .social-link:hover { color: #d3fc05; }
 .nav-item-title:hover { color: #d3fc05; }
 .tag a:hover { color: #d3fc05; }
-.copyright { color: #404040; }
-.poweredby { color: #404040; }
-.poweredby a { color: #404040; }
 .post-preview .title a{ color: #d3fc05; }
 .content-item a:hover{ text-decoration: underline; color: #d3fc05; }
 .post-list .title { color: #d3fc05; }
 .rmore { color: #d3fc05; }
 .terms .term a:hover { text-decoration: underline; color: #d3fc05; }
+
+.inline { display: inline; }
 
             .hljs-comment,
 .hljs-quote
@@ -143,12 +198,24 @@ small { color: #a4a5a2 } /* slightly faded and dimmed version of the body text c
         <script>hljs.initHighlightingOnLoad();</script>
     </head>
     <body>
-        <!-- TODO: Throw this in a nav -->
-        <h1 class="siteTitle">
-            <a href="/">The Reactor Core</a>
-        </h1>
-        <div class="post">
-    <div class="title">Code Test</div>
+        <div class="wrapper">
+            <!-- TODO: Throw this in a nav -->
+            <header>
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a href="/">The Reactor Core</a>
+                    </h1>
+                    <small>Where the engineers hang out</small>
+                </div>
+                <h2 class="nav">
+                    <a href="/about">About this Blog</a>
+                </h2>
+            </header>
+            <hr />
+            <section class="main-content">
+                <div class="post">
+    <h2 class="title">Code Test</h2>
+    <small>Published </small>
     <div class="content"><h1>Python</h1>
 <pre><code class="language-python">mylist = [1, 2, 3, 4]
 for num in mylist:
@@ -183,5 +250,10 @@ for(int num : myArray) {
 </div>
 </div>
 
+            </section>
+            <footer>
+                <!-- TODO: Add some content to my footer -->
+            </footer>
+        </div>
     </body>
 </html>
