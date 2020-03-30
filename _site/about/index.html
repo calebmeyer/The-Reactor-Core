@@ -83,6 +83,7 @@ pre {
 }
 code {
     background: #1D1F21;
+    color: #0088FF;
 }
 blockquote {
     background: #1D1F21;
@@ -121,6 +122,12 @@ small {
     animation-iteration-count: infinite;
 }
 
+@keyframes radiate {
+    0% { text-shadow: 0 0 2px #a9cc66; }
+    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05}
+    100% { text-shadow: 0 0 2px #a9cc66; }
+}
+
 .nav {
     margin: 10px 0;
     display: inline-block;
@@ -133,11 +140,6 @@ small {
     text-decoration: none;
 }
 
-@keyframes radiate {
-    0% { text-shadow: 0 0 2px #a9cc66; }
-    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05}
-    100% { text-shadow: 0 0 2px #a9cc66; }
-}
 .post .content h1 {
     color: #d3fc05;
 }
@@ -285,6 +287,9 @@ small {
 <h2>About this Blog</h2>
 <em>Where'd the name come from?</em>
 <p>If you've ever played any of the Mass Effect games, all of the engineers hang out at the reactor core at the back of the ship.</p>
+<br />
+<em>Why did you pick chartreuse (bright yellow green)?</em>
+<p>I also have played a bunch of modded minecraft, and yellorite/yellorium are this color. Combined with the warmer gray I'm using for the background, it feels nuclear to me.</p>
 
             </section>
             <footer>
