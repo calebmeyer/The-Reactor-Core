@@ -4,5 +4,8 @@ layout: base.html.liquid
 <div class="post">
     <h2 class="title">{{ pageTitle }}</h2>
     <small>Published {{ date | date: "%Y-%m-%d" }}</small>
-    <div class="content">{{ content }}</div>
+    <div class="content">
+        {{ content }}
+        <span class="tombstone">&#9670;</span>
+    </div>
 </div>
