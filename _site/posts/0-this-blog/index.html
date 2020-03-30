@@ -2,7 +2,6 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>The Reactor Core</title>
         <style media="screen">
             /* note: not actually a sass file, just using that for syntax highlighting */
@@ -15,98 +14,62 @@ body {
     background: #101010;
     color: #c8d1b8;
     font-family: Tahoma, Verdana, sans-serif;
-    font-size: 20px;
     line-height: 1.4;
     padding: 50px;
 }
 
-/* Thanks llogiq for the style inspiration! */
+/* Thanks llogiq! */
 .wrapper {
-    width: 860px;
-    margin: 0 auto;
+  width: 860px;
+  margin: 0 auto;
 }
 
 @media print, screen and (max-width: 960px) {
-    div.wrapper {
-        width: auto;
-        margin: 0;
-    }
+  div.wrapper {
+    width: auto;
+    margin: 0;
+  }
 }
 
 @media print, screen and (max-width: 720px) {
-    body {
-        word-wrap: break-word;
-    }
+  body {
+    word-wrap: break-word;
+  }
 
-    pre, code {
-        word-wrap: normal;
-    }
+  pre, code {
+    word-wrap: normal;
+  }
 }
 
 @media print, screen and (max-width: 480px) {
-    body {
-        padding: 15px;
-    }
-
-    h1 {
-        font-size: 20pt;
-    }
-
-    h2 {
-        font-size: 16pt;
-    }
-
-    h3 {
-        font-size: 14pt;
-    }
+  body {
+    padding: 15px;
+  }
 }
 
 @media print {
-    body {
-        padding: 0.4in;
-        font-size: 12pt;
-        color: #444;
-    }
+  body {
+    padding: 0.4in;
+    font-size: 12pt;
+    color: #444;
+  }
 }
 
 a {
     transition: text-shadow 0.5s;
     color: #d6f1fc;
 }
-a:hover {
-    text-shadow: 0 0 10px #a9cc66;
-}
-pre {
-    background: #1D1F21;
-    border: 1px solid #5C5C5C;
-    border-radius: 5px;
-}
-code {
-    background: #1D1F21;
-}
-blockquote {
-    background: #1D1F21;
-    border-left: 3px solid #d3fc05;
-}
-table {
-    margin: 1em auto;
-    border-collapse: collapse;
-}
-table, th, td {
-    border: 1px solid #5C5C5C;
-}
-tr:hover {
-    background: #1D1F21;
-}
-th {
-    background: #1D1F21;
-}
-small {
-    /* slightly faded and dimmed version of the body text color */
-    color: #a4a5a2
-}
+a:hover { text-shadow: 0 0 10px #a9cc66; }
+pre { background: #1D1F21; border: 1px solid #5C5C5C; border-radius: 5px; }
+code { background: #1D1F21; }
+blockquote { background: #1D1F21; border-left: 3px solid #d3fc05; }
+table { margin: 1em auto; border-collapse: collapse; }
+table, th, td { border: 1px solid #5C5C5C; }
+tr:hover { background: #1D1F21; }
+th { background: #1D1F21; }
+small { color: #a4a5a2 } /* slightly faded and dimmed version of the body text color */
 .site-title-wrapper {
-    width: 400px;
+    width: 300px;
     display: inline-block;
 }
 .site-title {
@@ -138,50 +101,22 @@ small {
     50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05}
     100% { text-shadow: 0 0 2px #a9cc66; }
 }
-.post .content h1 {
-    color: #d3fc05;
-}
-.post .content h2 {
-    color: #d3fc05;
-}
-.post .content h3 {
-    color: #d3fc05;
-}
-.post .content h4 {
-    color: #d3fc05;
-}
-.post .content h5 {
-    color: #d3fc05;
-}
-.post .content h6 {
-    color: #d3fc05;
-}
-.post .title {
-    color: #d3fc05;
-    margin-bottom: 0;
-}
-.post .content a:hover {
-    color: #d3fc05;
-}
-.social-link:hover {
-    color: #d3fc05;
-}
-.nav-item-title:hover {
-    color: #d3fc05;
-}
-.tag a:hover {
-    color: #d3fc05;
-}
-.post-preview .title a {
-    color: #d3fc05;
-}
-.content-item a:hover {
-    text-decoration: underline;
-    color: #d3fc05;
-}
-.post-list .title {
-    color: #d3fc05;
-}
+.post .content h1{ color: #d3fc05; }
+.post .content h2{ color: #d3fc05; }
+.post .content h3{ color: #d3fc05; }
+.post .content h4{ color: #d3fc05; }
+.post .content h5{ color: #d3fc05; }
+.post .content h6{ color: #d3fc05; }
+.post .title{ color: #d3fc05; margin-bottom: 0; }
+.post .content a:hover { color: #d3fc05; }
+.social-link:hover { color: #d3fc05; }
+.nav-item-title:hover { color: #d3fc05; }
+.tag a:hover { color: #d3fc05; }
+.post-preview .title a{ color: #d3fc05; }
+.content-item a:hover{ text-decoration: underline; color: #d3fc05; }
+.post-list .title { color: #d3fc05; }
+.rmore { color: #d3fc05; }
+.terms .term a:hover { text-decoration: underline; color: #d3fc05; }
 
 .inline { display: inline; }
 
@@ -264,6 +199,7 @@ small {
     </head>
     <body>
         <div class="wrapper">
+            <!-- TODO: Throw this in a nav -->
             <header>
                 <div class="site-title-wrapper">
                     <h1 class="site-title">
@@ -272,19 +208,16 @@ small {
                     <small>Where the engineers hang out</small>
                 </div>
                 <h2 class="nav">
-                    <a href="/about">About</a>
+                    <a href="/about">About this Blog</a>
                 </h2>
             </header>
             <hr />
             <section class="main-content">
-                <h2>Posts</h2>
-<ul><li class="post-preview">
-            <h3 class="inline"><a href="/posts/0-starting-a-blog/">0 - Starting a Blog</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-03-29</em>
-        </li>
-    
-</ul>
+                <div class="post">
+    <h2 class="title">0 - Starting a Blog</h2>
+    <small>Published 2020-03-29</small>
+    <div class="content"></div>
+</div>
 
             </section>
             <footer>
