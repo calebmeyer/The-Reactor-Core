@@ -319,7 +319,7 @@ const SimpleAjaxComponent = () =&gt; {
 }
 </code></pre>
 <h2>Validations</h2>
-<p>If we change the above call to a validation, then instead of firing only once, we want it to fire <em>only once</em> ...each time the user stops typing. Easy enough, Lodash has a function for exactly this case: <a href="https://lodash.com/docs/#debounce"><code>_.debounce</code></a>. Let's implement it:</p>
+<p>If we change the above call to a validation, then instead of firing only once, we want it to fire <em>only once</em> ...each time the user stops typing. Easy enough, Lodash has a function for exactly this case: <a href="https://lodash.com/docs/#debounce"><code>debounce</code></a>. Let's implement it:</p>
 <pre><code class="language-jsx">import React, { useState, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 
