@@ -295,13 +295,13 @@ blockquote > p {
     <div class="content">
         <p>I hope I can save someone the hours I spent debugging this. This post will assume a tiny bit of react knowledge.</p>
 <h1>React Hooks</h1>
-<p><a href="https://reactjs.org/docs/hooks-intro.html">React Hooks</a> are cool, right? No more writing long winded constructors, or <code>this.someFunction = this.someFunction.bind(this)</code> because classes don't auto bind. None of the headaches!</p>
-<p><em>Narrarator (hopefully Wayne June): That's what he thinks.</em></p>
-<p>All you have to do is useState for state variables and useEffect instead of componentDidMount. I've started using hooks everywhere, for every component I write. They make gigantic classical components into tiny, steamlined, easy to read functions.</p>
+<p><a href="https://reactjs.org/docs/hooks-intro.html">React Hooks</a> are cool, right? No more writing long-winded constructors, or <code>this.someFunction = this.someFunction.bind(this)</code> because classes don't auto bind. None of the headaches!</p>
+<p><em>Narrator (hopefully Wayne June): That's what he thinks.</em></p>
+<p>All you have to do is useState for state variables and useEffect instead of componentDidMount. I've started using hooks everywhere, for every component I write. They make gigantic classical components into tiny, steamlined, easy-to-read functions.</p>
 <h1>Ajax Validations</h1>
-<p>A few weeks ago, I came upon an interesting problem. We have a form that accepts a string. That string has to be unique in the context of a select box. The combination of the two is a huge amount of data, so getting it all ahead of time would slow down page load. A lot. So we made an ajax validation method. This is where our troubles began.</p>
+<p>A few weeks ago, I came upon an interesting problem. We have a form that accepts a string which has to be unique in the context of a select box. The combination of the two is a huge amount of data, so getting it all ahead of time would slow down page load. A lot. So we made an ajax validation method. This is where our troubles began.</p>
 <h2>Regular Ajax Calls</h2>
-<p>Normally, when you're making an ajax call from a component, you are just doing it once. So you can do something like this:</p>
+<p>Normally when you're making an ajax call from a component you are just doing it once. So you can do something like this:</p>
 <pre><code class="language-jsx">import React, { useState, useEffect } from 'react';
 import LoadingSpinner from 'loading_spinner';
 
@@ -319,7 +319,7 @@ const SimpleAjaxComponent = () =&gt; {
 }
 </code></pre>
 <h2>Validations</h2>
-<p>If we change the above call to a validation, then instead of firing only once, we want it to fire <em>only once</em> ...each time the user stops typing. Easy enough, Lodash has a function for exactly this case: <a href="https://lodash.com/docs/#debounce"><code>debounce</code></a>. Let's implement it:</p>
+<p>If we change the above call to a validation, then instead of firing only once we want it to fire only once ...each time the user stops typing. Easy enough, Lodash has a function for exactly this case: <a href="https://lodash.com/docs/#debounce"><code>debounce</code></a>. Let's implement it:</p>
 <pre><code class="language-jsx">import React, { useState, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 
@@ -336,11 +336,11 @@ const SimpleForm = () =&gt; {
 </code></pre>
 <p>This looks great! But it doesn't work. Can you guess why?</p>
 <h1>Why not, Caleb?</h1>
-<p><code>validate</code> is defined inside our component so we can <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">close over</a> the <code>setValid</code> function. This is great, but it exposes some behavior of react that usually doesn't cause a bug, but does here.</p>
-<p>Every time this component is rendered (and react likes to render <a href="https://thoughtbot.com/blog/react-rendering-misconception">early and often</a>), we are redefining this validate function, creating a brand new function. The <code>const</code> here feels misleading, because this isn't a constant. It's never changed within the scope of SimpleForm, but it's dropped and recreated each render.</p>
-<p>For most functions, this doesn't matter, since the contents of the function are the same. But for <code>debounce</code>d functions, it makes a huge difference: The callback is called after 1 second as expected, but also after 1.1 seconds, and 1.2 seconds, etc. It's called as many times as the debounced function is called, which is for every single change. If you type <code>hello</code>, the callback is fired 5 times.</p>
+<p><code>validate</code> is defined inside our component so we can <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">close over</a> the <code>setValid</code> function. This is great,  but it exposes some behavior of react that only causes a bug in this (rare) case.</p>
+<p>Every time this component is rendered (and react likes to render <a href="https://thoughtbot.com/blog/react-rendering-misconception">early and often</a>), we are redefining this validate function which creates a brand new function. The <code>const</code> here feels misleading because this isn't a constant. It's never changed within the scope of SimpleForm, but it's dropped and re-created each render.</p>
+<p>For most functions, this doesn't matter since the contents of the function are the same. But for <code>debounce</code>d functions, it makes a huge difference: The callback is called after 1 second as expected, but also after 1.1 seconds, and 1.2 seconds, etc. It's called as many times as the debounced function is called: for every single change. If you type <code>hello</code>, the callback is fired 5 times.</p>
 <h1>A Solution</h1>
-<p>Fortunately, the people who work on react are smart people, and realized that useState and useEffect would not be enough to replace all the things you can do in a classical component. They also added <a href="https://reactjs.org/docs/hooks-reference.html#usecallback"><code>useCallback</code></a>. I'll quote their docs here:</p>
+<p>Fortunately, the people who work on react are smart people, and they realized that useState and useEffect would not be enough to replace all the things you can do in a classical component. They also added <a href="https://reactjs.org/docs/hooks-reference.html#usecallback"><code>useCallback</code></a>. I'll quote their docs here:</p>
 <blockquote>
 <p>Returns a memoized callback.</p>
 </blockquote>

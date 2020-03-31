@@ -6,17 +6,17 @@ tags: posts
 I hope I can save someone the hours I spent debugging this. This post will assume a tiny bit of react knowledge.
 
 # React Hooks
-[React Hooks](https://reactjs.org/docs/hooks-intro.html) are cool, right? No more writing long winded constructors, or `this.someFunction = this.someFunction.bind(this)` because classes don't auto bind. None of the headaches!
+[React Hooks](https://reactjs.org/docs/hooks-intro.html) are cool, right? No more writing long-winded constructors, or `this.someFunction = this.someFunction.bind(this)` because classes don't auto bind. None of the headaches!
 
-_Narrarator (hopefully Wayne June): That's what he thinks._
+_Narrator (hopefully Wayne June): That's what he thinks._
 
-All you have to do is useState for state variables and useEffect instead of componentDidMount. I've started using hooks everywhere, for every component I write. They make gigantic classical components into tiny, steamlined, easy to read functions.
+All you have to do is useState for state variables and useEffect instead of componentDidMount. I've started using hooks everywhere, for every component I write. They make gigantic classical components into tiny, steamlined, easy-to-read functions.
 
 # Ajax Validations
-A few weeks ago, I came upon an interesting problem. We have a form that accepts a string. That string has to be unique in the context of a select box. The combination of the two is a huge amount of data, so getting it all ahead of time would slow down page load. A lot. So we made an ajax validation method. This is where our troubles began.
+A few weeks ago, I came upon an interesting problem. We have a form that accepts a string which has to be unique in the context of a select box. The combination of the two is a huge amount of data, so getting it all ahead of time would slow down page load. A lot. So we made an ajax validation method. This is where our troubles began.
 
 ## Regular Ajax Calls
-Normally, when you're making an ajax call from a component, you are just doing it once. So you can do something like this:
+Normally when you're making an ajax call from a component you are just doing it once. So you can do something like this:
 ```jsx
 import React, { useState, useEffect } from 'react';
 import LoadingSpinner from 'loading_spinner';
@@ -36,7 +36,7 @@ const SimpleAjaxComponent = () => {
 ```
 
 ## Validations
-If we change the above call to a validation, then instead of firing only once, we want it to fire _only once_ ...each time the user stops typing. Easy enough, Lodash has a function for exactly this case: [`debounce`](https://lodash.com/docs/#debounce). Let's implement it:
+If we change the above call to a validation, then instead of firing only once we want it to fire only once ...each time the user stops typing. Easy enough, Lodash has a function for exactly this case: [`debounce`](https://lodash.com/docs/#debounce). Let's implement it:
 ```jsx
 import React, { useState, useEffect } from 'react';
 import debounce from 'lodash/debounce';
@@ -56,14 +56,14 @@ const SimpleForm = () => {
 This looks great! But it doesn't work. Can you guess why?
 
 # Why not, Caleb?
-`validate` is defined inside our component so we can [close over](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) the `setValid` function. This is great, but it exposes some behavior of react that usually doesn't cause a bug, but does here.
+`validate` is defined inside our component so we can [close over](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) the `setValid` function. This is great,  but it exposes some behavior of react that only causes a bug in this (rare) case.
 
-Every time this component is rendered (and react likes to render [early and often](https://thoughtbot.com/blog/react-rendering-misconception)), we are redefining this validate function, creating a brand new function. The `const` here feels misleading, because this isn't a constant. It's never changed within the scope of SimpleForm, but it's dropped and recreated each render.
+Every time this component is rendered (and react likes to render [early and often](https://thoughtbot.com/blog/react-rendering-misconception)), we are redefining this validate function which creates a brand new function. The `const` here feels misleading because this isn't a constant. It's never changed within the scope of SimpleForm, but it's dropped and re-created each render.
 
-For most functions, this doesn't matter, since the contents of the function are the same. But for `debounce`d functions, it makes a huge difference: The callback is called after 1 second as expected, but also after 1.1 seconds, and 1.2 seconds, etc. It's called as many times as the debounced function is called, which is for every single change. If you type `hello`, the callback is fired 5 times.
+For most functions, this doesn't matter since the contents of the function are the same. But for `debounce`d functions, it makes a huge difference: The callback is called after 1 second as expected, but also after 1.1 seconds, and 1.2 seconds, etc. It's called as many times as the debounced function is called: for every single change. If you type `hello`, the callback is fired 5 times.
 
 # A Solution
-Fortunately, the people who work on react are smart people, and realized that useState and useEffect would not be enough to replace all the things you can do in a classical component. They also added [`useCallback`](https://reactjs.org/docs/hooks-reference.html#usecallback). I'll quote their docs here:
+Fortunately, the people who work on react are smart people, and they realized that useState and useEffect would not be enough to replace all the things you can do in a classical component. They also added [`useCallback`](https://reactjs.org/docs/hooks-reference.html#usecallback). I'll quote their docs here:
 
 > Returns a memoized callback.
 
