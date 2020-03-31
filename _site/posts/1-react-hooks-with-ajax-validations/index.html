@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>The Reactor Core</title>
+        <style media="screen">
+            /* note: not actually a sass file, just using that for syntax highlighting */
+
+/*
+ * main green: #d3fc05
+ */
+
+body {
+    background: #101010;
+    color: #c8d1b8;
+    font-family: Tahoma, Verdana, sans-serif;
+    font-size: 20px;
+    line-height: 1.4;
+    padding: 50px;
+}
+
+/* Thanks llogiq for the style inspiration! */
+.wrapper {
+    width: 860px;
+    margin: 0 auto;
+}
+
+@media print, screen and (max-width: 960px) {
+    div.wrapper {
+        width: auto;
+        margin: 0;
+    }
+}
+
+@media print, screen and (max-width: 720px) {
+    body {
+        word-wrap: break-word;
+    }
+
+    pre, code {
+        word-wrap: normal;
+    }
+}
+
+@media print, screen and (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20pt;
+    }
+
+    h2 {
+        font-size: 16pt;
+    }
+
+    h3 {
+        font-size: 14pt;
+    }
+}
+
+@media print {
+    body {
+        padding: 0.4in;
+        font-size: 12pt;
+        color: #444;
+    }
+}
+
+a {
+    transition: text-shadow 0.5s;
+    color: #d6f1fc;
+}
+a:hover {
+    text-shadow: 0 0 10px #a9cc66;
+}
+pre {
+    background: #1D1F21;
+    border: 1px solid #5C5C5C;
+    border-radius: 5px;
+}
+code {
+    background: #1D1F21;
+    color: #0088FF;
+}
+blockquote {
+    background: #1D1F21;
+    border-left: 3px solid #d3fc05;
+}
+table {
+    margin: 1em auto;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid #5C5C5C;
+}
+tr:hover {
+    background: #1D1F21;
+}
+th {
+    background: #1D1F21;
+}
+small {
+    /* slightly faded and dimmed version of the body text color */
+    color: #a4a5a2
+}
+.site-title-wrapper {
+    width: 400px;
+    display: inline-block;
+}
+.site-title {
+    margin: 0;
+}
+.site-title a {
+    color: #d3fc05;
+    text-decoration: none;
+    animation-name: radiate;
+    animation-duration: 5s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes radiate {
+    0% { text-shadow: 0 0 2px #a9cc66; }
+    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05}
+    100% { text-shadow: 0 0 2px #a9cc66; }
+}
+
+.nav {
+    margin: 10px 0;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.nav a {
+    color: #d3fc05;
+    text-decoration: none;
+}
+
+.post .content h1 {
+    color: #d3fc05;
+}
+.post .content h2 {
+    color: #d3fc05;
+}
+.post .content h3 {
+    color: #d3fc05;
+}
+.post .content h4 {
+    color: #d3fc05;
+}
+.post .content h5 {
+    color: #d3fc05;
+}
+.post .content h6 {
+    color: #d3fc05;
+}
+.post .title {
+    color: #d3fc05;
+    margin-bottom: 0;
+}
+.post .content a:hover {
+    color: #d3fc05;
+}
+.social-link:hover {
+    color: #d3fc05;
+}
+.nav-item-title:hover {
+    color: #d3fc05;
+}
+.tag a:hover {
+    color: #d3fc05;
+}
+.post-preview .title a {
+    color: #d3fc05;
+}
+.content-item a:hover {
+    text-decoration: underline;
+    color: #d3fc05;
+}
+.post-list .title {
+    color: #d3fc05;
+}
+
+.tombstone {
+    color: #d3fc05;
+}
+
+.inline {
+    display: inline;
+}
+
+blockquote > p {
+    margin-left: 10px;
+}
+
+            .hljs-comment,
+.hljs-quote
+{
+  color: #456b7c; /* darker version of background */
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion
+{
+  color: #5dcdfd; /* faded light blue */
+}
+
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link,
+.hljs-subst
+{
+  color: #35ddff; /* bright aqua */
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition
+{
+  color: #13CE00; /* verdant green */
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-attribute
+{
+  color: #96FF00; /* yellow green */
+}
+
+.hljs-keyword,
+.hljs-selector-tag
+{
+  color: #1ea8fc; /* cerulean */
+}
+
+.hljs
+{
+  display: block;
+  overflow-x: auto;
+  background: #19272d;
+  color: #b6ced8;
+  padding: 0.5em;
+  font-family: "Source Code Pro", "Consolas", monospace;
+}
+
+.hljs-emphasis
+{
+  font-style: italic;
+}
+
+.hljs-strong
+{
+  font-weight: bold;
+}
+
+        </style>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a href="/">The Reactor Core</a>
+                    </h1>
+                    <small>Where the engineers hang out</small>
+                </div>
+                <h2 class="nav">
+                    <a href="/about">About</a>
+                </h2>
+            </header>
+            <hr />
+            <section class="main-content">
+                <div class="post">
+    <h2 class="title">1 - React Hooks and Ajax Validations</h2>
+    <small>Published 2020-03-30</small>
+    <div class="content">
+        <p>I hope I can save someone the hours I spent debugging this. This post will assume a tiny bit of react knowledge.</p>
+<h1>React Hooks</h1>
+<p><a href="https://reactjs.org/docs/hooks-intro.html">React Hooks</a> are cool, right? No more writing long winded constructors, or <code>this.someFunction = this.someFunction.bind(this)</code> because classes don't auto bind. None of the headaches!</p>
+<p><em>Narrarator (hopefully Wayne June): That's what he thinks.</em></p>
+<p>All you have to do is useState for state variables and useEffect instead of componentDidMount. I've started using hooks everywhere, for every component I write. They make gigantic classical components into tiny, steamlined, easy to read functions.</p>
+<h1>Ajax Validations</h1>
+<p>A few weeks ago, I came upon an interesting problem. We have a form that accepts a string. That string has to be unique in the context of a select box. The combination of the two is a huge amount of data, so getting it all ahead of time would slow down page load. A lot. So we made an ajax validation method. This is where our troubles began.</p>
+<h2>Regular Ajax Calls</h2>
+<p>Normally, when you're making an ajax call from a component, you are just doing it once. So you can do something like this:</p>
+<pre><code class="language-jsx">import React, { useState, useEffect } from 'react';
+import LoadingSpinner from 'loading_spinner';
+
+const SimpleAjaxComponent = () =&gt; {
+    const [data, setData] = useState(null);
+    useEffect(() =&gt; {
+        ajaxForData().then(response =&gt; { setData(response) });
+    }, []); // empty array means this only happens on initial render
+
+    return (
+        data ?
+        &lt;div&gt;{data}&lt;/div&gt; :
+        &lt;LoadingSpinner /&gt;
+    );
+}
+</code></pre>
+<h2>Validations</h2>
+<p>If we change the above call to a validation, then instead of firing only once, we want it to fire <em>only once</em> ...each time the user stops typing. Easy enough, Lodash has a function for exactly this case: <a href="https://lodash.com/docs/#debounce"><code>_.debounce</code></a>. Let's implement it:</p>
+<pre><code class="language-jsx">import React, { useState, useEffect } from 'react';
+import debounce from 'lodash/debounce';
+
+const SimpleForm = () =&gt; {
+    const [value, setValue] = useState('');
+    const [valid, setValid] = useState(false);
+    const validate = debounce(() =&gt; {
+        ajaxForData(value).then(response =&gt; setValid(response));
+    }, 1000); // run this only once per second
+    useEffect(validate, [value]); // run this only when the value changes
+
+    return &lt;input value={value} onChange={setValue} isInvalid={!valid} /&gt;;
+}
+</code></pre>
+<p>This looks great! But it doesn't work. Can you guess why?</p>
+<h1>Why not, Caleb?</h1>
+<p><code>validate</code> is defined inside our component so we can <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">close over</a> the <code>setValid</code> function. This is great, but it exposes some behavior of react that usually doesn't cause a bug, but does here.</p>
+<p>Every time this component is rendered (and react likes to render <a href="https://thoughtbot.com/blog/react-rendering-misconception">early and often</a>), we are redefining this validate function, creating a brand new function. The <code>const</code> here feels misleading, because this isn't a constant. It's never changed within the scope of SimpleForm, but it's dropped and recreated each render.</p>
+<p>For most functions, this doesn't matter, since the contents of the function are the same. But for <code>debounce</code>d functions, it makes a huge difference: The callback is called after 1 second as expected, but also after 1.1 seconds, and 1.2 seconds, etc. It's called as many times as the debounced function is called, which is for every single change. If you type <code>hello</code>, the callback is fired 5 times.</p>
+<h1>A Solution</h1>
+<p>Fortunately, the people who work on react are smart people, and realized that useState and useEffect would not be enough to replace all the things you can do in a classical component. They also added <a href="https://reactjs.org/docs/hooks-reference.html#usecallback"><code>useCallback</code></a>. I'll quote their docs here:</p>
+<blockquote>
+<p>Returns a memoized callback.</p>
+</blockquote>
+<p>Memoization just means they keep using the same function each time. Since we use the same function, <code>debounce</code> works. Here's how that looks:</p>
+<pre><code class="language-jsx">import React, { useState, useCallback, useEffect } from 'react';
+import debounce from 'lodash/debounce';
+
+const SimpleForm = () =&gt; {
+    const [value, setValue] = useState('');
+    const [valid, setValid] = useState(false);
+    const validate = useCallback(debounce((value) =&gt; {
+        ajaxForData(value).then(response =&gt; setValid(response));
+    }, 1000); // run this only once per second
+
+    useEffect(() =&gt; {
+        // we have to pass in `value`. Otherwise useCallback will enclose
+        // only the initial value instead of the current one each time.
+        validate(value)
+    }, [value]); // run this only when the value changes
+
+    return &lt;input value={value} onChange={setValue} isInvalid={!valid} /&gt;;
+}
+</code></pre>
+
+        <span class="tombstone">&#9670;</span>
+    </div>
+</div>
+
+            </section>
+            <footer>
+                <!-- TODO: Add some content to my footer -->
+            </footer>
+        </div>
+    </body>
+</html>
