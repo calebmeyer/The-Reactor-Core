@@ -300,7 +300,7 @@ blockquote > p {
 <h1>React Hooks</h1>
 <p><a href="https://reactjs.org/docs/hooks-intro.html">React Hooks</a> are cool, right? No more writing long-winded constructors, or <code>this.someFunction = this.someFunction.bind(this)</code> because classes don't auto bind. None of the headaches!</p>
 <p><em>Narrator (hopefully Wayne June): That's what he thinks.</em></p>
-<p>All you have to do is useState for state variables and useEffect instead of componentDidMount. I've started using hooks everywhere, for every component I write. They make gigantic classical components into tiny, steamlined, easy-to-read functions.</p>
+<p>All you have to do is <code>useState</code> for state variables and <code>useEffect</code> instead of componentDidMount. I've started using hooks everywhere, for every component I write. They make gigantic classical components into tiny, steamlined, easy-to-read functions.</p>
 <h1>Ajax Validations</h1>
 <p>A few weeks ago, I came upon an interesting problem. We have a form that accepts a string which has to be unique in the context of a select box. The combination of the two is a huge amount of data, so getting it all ahead of time would slow down page load. A lot. So we made an ajax validation method. This is where our troubles began.</p>
 <h2>Regular Ajax Calls</h2>
@@ -367,7 +367,7 @@ const SimpleForm = () =&gt; {
     return &lt;input value={value} onChange={setValue} isInvalid={!valid} /&gt;;
 }
 </code></pre>
-<p>The important takeaways here are:</p>
+<h1>Takeaways</h1>
 <ul>
 <li><code>const</code> is not actually constant, just cannot be mutated while in scope</li>
 <li><code>useCallback</code> when you need to re-use the same function</li>
