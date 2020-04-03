@@ -88,3 +88,8 @@ const SimpleForm = () => {
     return <input value={value} onChange={setValue} isInvalid={!valid} />;
 }
 ```
+
+The important takeaways here are:
+- `const` is not actually constant, just cannot be mutated while in scope
+- `useCallback` when you need to re-use the same function
+- React's new hooks are great, and you should use them!
