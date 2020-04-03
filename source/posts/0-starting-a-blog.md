@@ -15,4 +15,4 @@ In addition to programming, I also like to write (surprise!), read, and play gam
 
 I might talk about many of the above things. I might go off on a tangent about math, or science, or modern events. It's hard (as a writer), to nail yourself to a genre or category before you've even really started. I do expect many of my posts to be slightly rambly, though I will try to at least provide headings as an outline so you can skip to the good parts.
 
-Thanks for reading, and please feel free to fork and PR this repo if you catch any spelling, grammar, or usage mistakes (or other mistakes).
+Thanks for reading, and please feel free to fork and PR [this repo](https://github.com/calebmeyer/The-Reactor-Core) if you catch any spelling, grammar, or usage mistakes (or other mistakes).
