@@ -1,7 +1,7 @@
 ---
 date: 2020-04-14T20:11:00
 pageTitle: 2 - The Friendly Interactive Shell
-tags: draft
+tags: posts
 ---
 I was at work today explaining to someone how to make a shell alias, and it reminded me of one of the many reasons why I use [the friendly interactive shell](https://fishshell.com/), `fish`. Before I get too deep into the weeds, I want to clarify one thing. I have no quarrel with bash or zsh or powershell. I think each of them has a lot of strengths, not least the volume of code written for them. With that said, let's talk about terminals and shells.
 
