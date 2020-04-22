@@ -123,7 +123,7 @@ header a, h1, h2, h3, h4, h5, h6 {
 .site-title {
     margin: 0;
 }
-.site-title a {
+.site-title a, .glow {
     color: #d3fc05;
     text-decoration: none;
     animation-name: radiate;
@@ -318,17 +318,22 @@ img:not([width]) { /* set images to take up the full width, unless I specify a w
 <h2>About this Blog</h2>
 <em>Where'd the name come from?</em>
 <p>If you've ever played any of the Mass Effect games, all of the engineers hang out at the reactor core at the back of the ship.</p>
+<img src="../posts/img/reactor-core.png" alt="The Reactor Core of the Normandy from Mass Effect">
 
-<br />
+<br /><br />
 
-<em>Why did you pick chartreuse (bright yellow green)?</em>
+<em>Why did you pick <span style="color: #d3fc05;">chartreuse</span> (bright yellow green)?</em>
 <p>I also have played a bunch of modded minecraft, and yellorite/yellorium are this color. Combined with the warmer gray I'm using for the background, it feels nuclear to me.</p>
 
 <br />
 
-<em>How did you make the glow effect?</em>
+<em>How did you make the <span class="glow">glow effect</span>?</em>
 <p>Some googling and stack overflow. You can see <a href="https://github.com/calebmeyer/The-Reactor-Core/blob/f5b8989f02c93b0070be5cf11199372075fc0d1c/source/static/base-styles.css.scss.liquid#L109-L122">the full CSS here</a>, but it's basically an animation using the <code>text-shadow</code> property.</p>
 
+<br />
+
+<em>What's that thing at the bottom? Some kind of diamond?</em>
+<p>Yes! That is actually made using the html escape for diamond. The proper name for it is a <a href="https://en.wikipedia.org/wiki/Tombstone_(typography)">Tombstone</a>, or QED mark for the latin <em>quod erat demonstrandum</em>, literally "which was to be demonstrated"<p>
 <span class="tombstone">&#9670;</span>
 
             </section>
