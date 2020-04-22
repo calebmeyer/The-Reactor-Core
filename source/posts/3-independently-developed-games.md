@@ -29,7 +29,7 @@ When I was in college, the console wars were in full swing. New developers and p
 These "AAA" games were becoming huge affairs, capable of costing and generating huge amounts of money. Games slowly crept up from the $20 of my youth to the $60 that is standard today. And compared to many traditional forms of entertainment, their value was immense. Going bowling once would cost you $7 for shoe rental and $12/hour for a lane. Going to the movies was $12/ticket and $5/soda for ~2 hours of fun. Don't even get me started on skiing or golfing. But a $60 game like Fable could net you tens or hundreds of hours of entertainment across several playthroughs.
 
 # Independent Games
-AAA games were awesome... mostly. But we'll get back to that.
+AAA games were awesome... mostly. But we'll get back to that another time.
 
 In 2009, a single developer created a little game you also may have heard of: **Minecraft**. When I was in college, I started hearing about this little game named Minecraft, and how _super fun_ it was from all my friends. Now these are the same friends who told me about Halo and Call of Duty, so I had some faith in them. But I looked at the game and it looked like crap. Super blocky, probably not fun at all. Fast forward about a year to when a friend lets me try it overnight at his house. I started at about 6pm. I realized at about 6am that I had neither eaten, slept, nor used the restroom for the last 12 hours. I was in dire need of all three.
 
