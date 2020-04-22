@@ -15,7 +15,7 @@ Modern examples of a rogue-like are [NetHack](https://www.nethack.org/) and [Dun
 # The Nintendo Seal of Quality
 We're going off on a minor tangent here, but I promise it's related to our topic at hand. Nintendo was not the first company to make a games console, but it was the first console that really took off. The Nintendo Entertainment System (or NES for short) sold like hotcakes, driven in part by the amazing first party titles like Super Mario Bros and The Legend of Zelda. However, a game console cannot be supported by only one company, so Nintendo did something quite shrewd. They introduced the "Nintendo Seal of Quality".
 
-<img src="../img/nes-quality.png" alt="The NES Seal of Quality" width=200 />
+<img src="../img/nes-quality.png" alt="The NES Seal of Quality" width="200px" />
 
 This let you know that Nintendo had verified that the game was family friendly, playable, and fun. It didn't mean the game would not have bugs, but it set a minimum bar of quality on games and led to a lot more trust in the game industry.
 
@@ -53,7 +53,9 @@ The "standard" price for an independently developed game is $15. I've heard it s
 
 [Super Meat Boy](https://en.wikipedia.org/wiki/Super_Meat_Boy) is an amazing 2d platformer developed by the two man Team Meat, and scored by the amazing [Danny Baranowsky](http://dbsoundworks.com/). In this game, you play as the titular Meat Boy, and you rescue your girlfriend Bandage Girl from the evil Dr. Fetus. Each level is filled with horrible dangers like buzzsaws and spikes and lava and salt and infinite pits. After each level, you get to watch all your runs at once, which is a soothing catharsis after the rage that is trying to beat the level.
 
-Can I sneak another metroidvania in here? No? Too bad, it's my blog. (I might have a type...) [Ori and the Blind Forest](https://www.orithegame.com/blind-forest/) (recently sequeled as Ori and the Will of the Wisps), is a game that will make you cry. Tears of sadness. Tears of joy. Tears of pride. But never tears of frustration. You play as Ori, an _adorable_ small white forest spirit. You go through beautiful area after beautiful area, each one a masterpiece, each one worth screenshotting. The platforming, puzzles, and combat are almost overshadowed by the beautifully tragic story.
+Can I sneak another metroidvania in here? No? Too bad, it's my blog. (I might have a type...) [Ori and the Blind Forest](https://www.orithegame.com/blind-forest/) (recently sequeled as Ori and the Will of the Wisps), is a game that will make you cry. Tears of sadness. Tears of joy. Tears of pride. But never tears of frustration. You play as Ori, an _adorable_ small white forest spirit. You go through beautiful area after beautiful area, each one a masterpiece, each one worth screenshotting. The platforming, puzzles, and combat are almost overshadowed by the beautifully tragic story. (P.S. Don't believe me on the beauty? Check out this screenshot of actual gameplay)
+
+![Ori and the Blind Forest Screenshot](../img/ori.png)
 
 Indie Studio [Butterscotch Shenanigans](https://www.bscotch.net/) started as a purely mobile game developer and have built their 2 (then 3, then a few more) person studio from the ground up. Their biggest hit, [Crashlands](https://www.crashlands.net/), is probably the only mobile game worth playing, and their upcoming LevelHead promises to be another hit. They also have a really cool podcast about game development.
 

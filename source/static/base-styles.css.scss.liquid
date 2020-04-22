@@ -201,5 +201,9 @@ blockquote > p {
 }
 
 .language-shell .hljs-meta {
-    user-select: none; // don't allow users to select $ in shell
+    user-select: none; /* don't allow users to select $ in shell */
+}
+
+img:not([width]) { /* set images to take up the full width, unless I specify a width on them */
+    width: 100%;
 }
