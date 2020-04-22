@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>The Reactor Core</title>
+        <style media="screen">
+            /* note: not actually a sass file, just using that for syntax highlighting */
+
+/*
+ * main green: #d3fc05
+ */
+
+body {
+    background: #101010;
+    color: #c8d1b8;
+    font-family: gitan-latin; Tahoma, Verdana, sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
+    padding: 50px;
+}
+
+/* Thanks llogiq for the style inspiration! */
+.wrapper {
+    width: 860px;
+    margin: 0 auto;
+}
+
+@media print, screen and (max-width: 960px) {
+    div.wrapper {
+        width: auto;
+        margin: 0;
+    }
+}
+
+@media print, screen and (max-width: 720px) {
+    body {
+        word-wrap: break-word;
+    }
+
+    pre, code {
+        word-wrap: normal;
+    }
+}
+
+@media print, screen and (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20pt;
+    }
+
+    h2 {
+        font-size: 16pt;
+    }
+
+    h3 {
+        font-size: 14pt;
+    }
+}
+
+@media print {
+    body {
+        padding: 0.4in;
+        font-size: 12pt;
+        color: #444;
+    }
+}
+
+a {
+    transition: text-shadow 0.5s;
+    color: #d6f1fc;
+}
+a:hover {
+    text-shadow: 0 0 10px #a9cc66;
+}
+pre {
+    background: #1D1F21;
+    border: 1px solid #5C5C5C;
+    border-radius: 5px;
+}
+code {
+    background: #1D1F21;
+    color: #0088FF;
+    font-family: "Source Code Pro", monospace;
+}
+blockquote {
+    background: #1D1F21;
+    border-left: 3px solid #d3fc05;
+}
+
+blockquote > p {
+    padding-bottom: 0.5em;
+}
+table {
+    margin: 1em auto;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid #5C5C5C;
+}
+tr:hover {
+    background: #1D1F21;
+}
+th {
+    background: #1D1F21;
+}
+small {
+    /* slightly faded and dimmed version of the body text color */
+    color: #a4a5a2
+}
+
+header a, h1, h2, h3, h4, h5, h6 {
+    font-family: Tahoma, Verdana, sans-serif;
+}
+
+.site-title-wrapper {
+    width: 400px;
+    display: inline-block;
+}
+.site-title {
+    margin: 0;
+}
+.site-title a {
+    color: #d3fc05;
+    text-decoration: none;
+    animation-name: radiate;
+    animation-duration: 5s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes radiate {
+    0% { text-shadow: 0 0 2px #a9cc66; }
+    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05}
+    100% { text-shadow: 0 0 2px #a9cc66; }
+}
+
+.nav {
+    margin: 10px 0;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.nav a {
+    color: #d3fc05;
+    text-decoration: none;
+}
+
+.post .content h1 {
+    color: #d3fc05;
+}
+.post .content h2 {
+    color: #d3fc05;
+}
+.post .content h3 {
+    color: #d3fc05;
+}
+.post .content h4 {
+    color: #d3fc05;
+}
+.post .content h5 {
+    color: #d3fc05;
+}
+.post .content h6 {
+    color: #d3fc05;
+}
+.post .title {
+    color: #d3fc05;
+    margin-bottom: 0;
+}
+.post .content a:hover {
+    color: #d3fc05;
+}
+.social-link:hover {
+    color: #d3fc05;
+}
+.nav-item-title:hover {
+    color: #d3fc05;
+}
+.tag a:hover {
+    color: #d3fc05;
+}
+.post-preview .title a {
+    color: #d3fc05;
+}
+.content-item a:hover {
+    text-decoration: underline;
+    color: #d3fc05;
+}
+.post-list .title {
+    color: #d3fc05;
+}
+
+.tombstone {
+    color: #d3fc05;
+}
+
+.inline {
+    display: inline;
+}
+
+blockquote > p {
+    margin-left: 10px;
+}
+
+.language-shell .hljs-meta {
+    user-select: none; // don't allow users to select $ in shell
+}
+
+            .hljs-comment,
+.hljs-quote
+{
+  color: #456b7c; /* darker version of background */
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion
+{
+  color: #5dcdfd; /* faded light blue */
+}
+
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link,
+.hljs-subst
+{
+  color: #35ddff; /* bright aqua */
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition
+{
+  color: #13CE00; /* verdant green */
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-attribute
+{
+  color: #96FF00; /* yellow green */
+}
+
+.hljs-keyword,
+.hljs-selector-tag
+{
+  color: #1ea8fc; /* cerulean */
+}
+
+.hljs
+{
+  display: block;
+  overflow-x: auto;
+  background: #19272d;
+  color: #b6ced8;
+  padding: 0.5em;
+  font-family: "Source Code Pro", "Consolas", monospace;
+}
+
+.hljs-emphasis
+{
+  font-style: italic;
+}
+
+.hljs-strong
+{
+  font-weight: bold;
+}
+
+        </style>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap">
+        <link rel="stylesheet" href="https://use.typekit.net/uvh1qwh.css">
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a href="/">The Reactor Core</a>
+                    </h1>
+                    <small>Where the engineers hang out</small>
+                </div>
+                <h2 class="nav">
+                    <a href="/about">About</a>
+                </h2>
+            </header>
+            <hr />
+            <section class="main-content">
+                <div class="post">
+    <h2 class="title">3 - Indie Games</h2>
+    <small>Published 2020-04-21</small>
+    <div class="content">
+        <p>I was challenged by some friends last week to talk about something not related to work. I am a multi-faceted person, with many interests, so it makes sense to talk about many things. Today I'd like to talk about independently developed (indie) games.</p>
+<h1>Rogue and its Descendants</h1>
+<p>All of the earliest computer games were developed by people, not by companies. Back in those days, there was no such thing as a &quot;game studio&quot;, because the concept of software was barely off the ground. <a href="https://en.wikipedia.org/wiki/Rogue_(video_game)">Rogue</a> was one of the most influential games in history, and it was developed by just a few guys. In rogue, you control a character (represented by an <code>@</code> symbol) who walks through a procedurally generated dungeon, killing bad guys and grabbing loot. The game has had so many copies, inspired-bys, and spinoffs that it has become not one but two genres:</p>
+<ul>
+<li>rogue-likes, or games that are like rogue</li>
+<li>rogue-lites, or games that take one or more of the fundamental concepts of rogue and use it for a different type of game</li>
+</ul>
+<p>Modern examples of a rogue-like are <a href="https://www.nethack.org/">NetHack</a> and <a href="https://crawl.develz.org/">Dungeon Crawl Stone Soup</a>. Modern examples of a rogue-lite are <a href="http://www.cellardoorgames.com/roguelegacy/">Rogue Legacy</a> and <a href="https://www.megacrit.com/">Slay the Spire</a>.</p>
+<h1>The Nintendo Seal of Quality</h1>
+<p>We're going off on a minor tangent here, but I promise it's related to our topic at hand. Nintendo was not the first company to make a games console, but it was the first console that really took off. The Nintendo Entertainment System (or NES for short) sold like hotcakes, driven in part by the amazing first party titles like Super Mario Bros and The Legend of Zelda. However, a game console cannot be supported by only one company, so Nintendo did something quite shrewd. They introduced the &quot;Nintendo Seal of Quality&quot;.</p>
+<img src="../img/nes-quality.png" alt="The NES Seal of Quality" width=200 />
+<p>This let you know that Nintendo had verified that the game was family friendly, playable, and fun. It didn't mean the game would not have bugs, but it set a minimum bar of quality on games and led to a lot more trust in the game industry.</p>
+<h1>The AAA Publishing Industry</h1>
+<p>And with that newfound trust, the industry flourished. As consoles and home computers grew in power, so too did the games they could play. The consoles went from 8 bit to 16 bit to 64 bit and beyond. Computers gained mice to go with their keyboards, and graphical user interfaces to go with their terminals. Windows introduced the world to Klondike solitaire and Minesweeper. And companies like Sierra Entertainment and Interplay made their names with video games like <a href="https://en.wikipedia.org/wiki/King%27s_Quest">King's Quest</a>, <a href="https://en.wikipedia.org/wiki/Quest_for_Glory">Quest for Glory</a>, and <a href="https://en.wikipedia.org/wiki/Fallout_(video_game)">Fallout</a>.</p>
+<p>As the games industry flourished, new companies entered the console wars. Sega introduced the Genesis, Sony introduced the PlayStation, and Microsoft introduced the Xbox in three subsequent generations. Each had huge success with first party games like Sonic the Hedgehog, Tekken, Twisted Metal, and Halo.</p>
+<p>When I was in college, the console wars were in full swing. New developers and publishers started to arise as big names in the industry. Activision started creating a new Call of Duty game every year or two. Bioware did the same for Mass Effect. Bethesda released new Elder Scrolls games to massive acclaim. Blizzard added Diablo 3 and Starcraft 2 to their already impressive portfolio (perhaps you've heard of a little game called <strong>World of Warcraft</strong>?). Electronic Arts released hit games across many movie franchises like Star Wars and Harry Potter.</p>
+<p>These &quot;AAA&quot; games were becoming huge affairs, capable of costing and generating huge amounts of money. Games slowly crept up from the $20 of my youth to the $60 that is standard today. And compared to many traditional forms of entertainment, their value was immense. Going bowling once would cost you $7 for shoe rental and $12/hour for a lane. Going to the movies was $12/ticket and $5/soda for ~2 hours of fun. Don't even get me started on skiing or golfing. But a $60 game like Fable could net you tens or hundreds of hours of entertainment across several playthroughs.</p>
+<h1>Independent Games</h1>
+<p>AAA games were awesome... mostly. But we'll get back to that.</p>
+<p>In 2009, a single developer created a little game you also may have heard of: <strong>Minecraft</strong>. When I was in college, I started hearing about this little game named Minecraft, and how <em>super fun</em> it was from all my friends. Now these are the same friends who told me about Halo and Call of Duty, so I had some faith in them. But I looked at the game and it looked like crap. Super blocky, probably not fun at all. Fast forward about a year to when a friend lets me try it overnight at his house. I started at about 6pm. I realized at about 6am that I had neither eaten, slept, nor used the restroom for the last 12 hours. I was in dire need of all three.</p>
+<p>Minecraft is the most successful video game of all time in terms of pure sales numbers. But it wasn't developed by a fleet of people working for millions of dollars before a copy was ever sold. It was developed by a single guy. This is what I call</p>
+<h2>The Paradox of Indie Games</h2>
+<blockquote>
+<p>A game's sales and price are not linearly related to the cost of and number of people developing it.</p>
+</blockquote>
+<h2>The Hockey Stick</h2>
+<p>As the games industry has matured, it has also exploded. <a href="https://store.steampowered.com/about/">Steam</a> has almost 30,000 games, and it's not the only seller in town. Epic Games has a huge and growing library of awesome games. Good ol Games refreshes old games, but has also developed many of their own, and has the best launcher, <a href="https://www.gog.com/galaxy">GOG Galaxy</a>.</p>
+<p>The problem with all these games is it's hard to sort through them all. There are new games coming out literally every single day. The good news is that means that you can now get incredible games for a fraction of that $60 price tag. The bad news is that if you want to get into game development, you've got a tough road ahead.</p>
+<h2>Why are Indie Games so great?</h2>
+<p>The &quot;standard&quot; price for an independently developed game is $15. I've heard it said that you should sleep on any purchase larger than $15, which makes this the perfect price point for impulse buys. And I've made some impulse buys that have been incredibly rewarding. Let's talk about a few of these games.</p>
+<p><a href="https://hollowknight.com/">Hollow Knight</a> was developed by a team of 3 guys, but it's literally incredible in every dimension. It's the best metroidvania you can buy today, and it's only $15. You play as a bug who wields a nail like a sword. The gameplay is smooth and the controls are tight. The art is detailed and hauntingly beautiful. It's also carefully designed, with incredible parallax effects and a consistent and important color theme. The soundtrack is amazing (thank you Christopher Larkin!) and certainly worth listening to all by itself. It's awesome enough that one of my favorite YouTubers, 8 bit music theory, did a <a href="https://www.youtube.com/playlist?list=PL-ZQIvQFPv4LZHpzMDxZI3IQ5yjpyTbWp">whole 3 part series</a> on the music alone.</p>
+<p><a href="https://www.megacrit.com/">Slay the Spire</a>, which I mentioned as a rogue lite above, is a deckbuilding dungeon crawler. Cards are a great source of randomness, and every run feels different due to the many choices you're given at each floor of the spire. The art is good, the music is good, and the gameplay is top notch.</p>
+<p><a href="https://en.wikipedia.org/wiki/Super_Meat_Boy">Super Meat Boy</a> is an amazing 2d platformer developed by the two man Team Meat, and scored by the amazing <a href="http://dbsoundworks.com/">Danny Baranowsky</a>. In this game, you play as the titular Meat Boy, and you rescue your girlfriend Bandage Girl from the evil Dr. Fetus. Each level is filled with horrible dangers like buzzsaws and spikes and lava and salt and infinite pits. After each level, you get to watch all your runs at once, which is a soothing catharsis after the rage that is trying to beat the level.</p>
+<p>Can I sneak another metroidvania in here? No? Too bad, it's my blog. (I might have a type...) <a href="https://www.orithegame.com/blind-forest/">Ori and the Blind Forest</a> (recently sequeled as Ori and the Will of the Wisps), is a game that will make you cry. Tears of sadness. Tears of joy. Tears of pride. But never tears of frustration. You play as Ori, an <em>adorable</em> small white forest spirit. You go through beautiful area after beautiful area, each one a masterpiece, each one worth screenshotting. The platforming, puzzles, and combat are almost overshadowed by the beautifully tragic story.</p>
+<p>Indie Studio <a href="https://www.bscotch.net/">Butterscotch Shenanigans</a> started as a purely mobile game developer and have built their 2 (then 3, then a few more) person studio from the ground up. Their biggest hit, <a href="https://www.crashlands.net/">Crashlands</a>, is probably the only mobile game worth playing, and their upcoming LevelHead promises to be another hit. They also have a really cool podcast about game development.</p>
+<h1>Takeaways</h1>
+<p>There are hundreds if not thousands of other games worth mentioning here. None were developed by a huge &quot;AAA&quot; studio for a big brand name publisher. Many of them are free or incredibly low cost. The golden age of video games is upon us, and shows no signs of stopping. I hope you will take the opportunity to check out some of these indie games, maybe give one a try. You might like it.</p>
+
+        <span class="tombstone">&#9670;</span>
+    </div>
+</div>
+
+            </section>
+            <footer>
+                <!-- TODO: Add some content to my footer -->
+            </footer>
+        </div>
+    </body>
+</html>
