@@ -25,6 +25,8 @@ I still practice my piano about 6 nights out of 7, but I tried a few virtual les
 # Corona is depressing
 I've never suffered from depression in a major way before. I had some down times in high school and college when it seemed like I could never achieve all my dreams; when "chasing skirts", as my dad would say, didn't work out. Not all days are great days, and I've had my share of bad ones. Even before coronavirus, I'd get inexplicably down some days. My male friends and I used to joke in college about being on our "comma".
 
+But I'll be darned if this thing hasn't got me down. My life prior to Coronavirus was a bit _more_ social than I'd like. Mondays were often dinner with someone, or our only days off. Tuesdays were board game night. Wednesdays we had my wife's sister come over to help with the kids and play some games. Thursdays were small group meetings. Fridays were shopping nights. Now? The days all blend together. If it weren't for my Friday afternoon virtual happy hour I'd barely know it was the weekend. As I mentioned above, things that used to be what I looked forward to don't bring me as much joy anymore. I think I'm well and truly depressed.
+
 # Hope fully
 Despite all this, I think I have just now discovered a way out, a way forward. A few years ago, my boss gave all of us engineers a field notes notebook and a little handwritten note on cardstock:
 
