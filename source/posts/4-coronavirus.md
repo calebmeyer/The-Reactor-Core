@@ -32,7 +32,7 @@ Despite all this, I think I have just now discovered a way out, a way forward. A
 
 > You don't have to always do your best, you just have to do better than yesterday.
 
-He explained it to us this way: If every day were a 110% day, then in reality every day is just average. If we all wrote 1000 lines of perfect, bug free (hah) code every day, then there would never be days worth celebrating, just days. The bad days are literally defined by the good.
+He explained it to us this way: If every day were a 110% day, then in reality every day is just average. If we all wrote 1000 lines of perfect, bug free (hah) code every day, then there would never be days worth celebrating, just days. The good days are literally defined by the bad.
 
 In this morning's message, a charming Spanish speaking man named Carlos encouraged us to have esperanza. We can have hope for the future. Corona will be with us for some as yet unknown amount of time, but these low points will allow us to see the high points better when they come around again.
 
