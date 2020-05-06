@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>The Reactor Core</title>
+        <style media="screen">
+            /* note: not actually a sass file, just using that for syntax highlighting */
+
+/*
+ * main green: #d3fc05
+ */
+
+body {
+    background: #101010;
+    color: #c8d1b8;
+    font-family: gitan-latin; Tahoma, Verdana, sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
+    padding: 50px;
+}
+
+/* Thanks llogiq for the style inspiration! */
+.wrapper {
+    width: 860px;
+    margin: 0 auto;
+}
+
+@media print, screen and (max-width: 960px) {
+    div.wrapper {
+        width: auto;
+        margin: 0;
+    }
+}
+
+@media print, screen and (max-width: 720px) {
+    body {
+        word-wrap: break-word;
+    }
+
+    pre, code {
+        word-wrap: normal;
+    }
+}
+
+@media print, screen and (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20pt;
+    }
+
+    h2 {
+        font-size: 16pt;
+    }
+
+    h3 {
+        font-size: 14pt;
+    }
+}
+
+@media print {
+    body {
+        padding: 0.4in;
+        font-size: 12pt;
+        color: #444;
+    }
+}
+
+a {
+    transition: text-shadow 0.5s;
+    color: #d6f1fc;
+}
+a:hover {
+    text-shadow: 0 0 10px #a9cc66;
+}
+pre {
+    background: #1D1F21;
+    border: 1px solid #5C5C5C;
+    border-radius: 5px;
+}
+code {
+    background: #1D1F21;
+    color: #0088FF;
+    font-family: "Source Code Pro", monospace;
+}
+blockquote {
+    background: #1D1F21;
+    border-left: 3px solid #d3fc05;
+}
+
+blockquote > p {
+    padding-bottom: 0.5em;
+}
+table {
+    margin: 1em auto;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid #5C5C5C;
+}
+tr:hover {
+    background: #1D1F21;
+}
+th {
+    background: #1D1F21;
+}
+small {
+    /* slightly faded and dimmed version of the body text color */
+    color: #a4a5a2
+}
+
+header a, h1, h2, h3, h4, h5, h6 {
+    font-family: Tahoma, Verdana, sans-serif;
+}
+
+.site-title-wrapper {
+    width: 400px;
+    display: inline-block;
+}
+.site-title {
+    margin: 0;
+}
+.site-title a, .glow {
+    color: #d3fc05;
+    text-decoration: none;
+    animation-name: radiate;
+    animation-duration: 5s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes radiate {
+    0% { text-shadow: 0 0 2px #a9cc66; }
+    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05}
+    100% { text-shadow: 0 0 2px #a9cc66; }
+}
+
+.nav {
+    margin: 10px 0;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.nav a {
+    color: #d3fc05;
+    text-decoration: none;
+}
+
+.post .content h1 {
+    color: #d3fc05;
+}
+.post .content h2 {
+    color: #d3fc05;
+}
+.post .content h3 {
+    color: #d3fc05;
+}
+.post .content h4 {
+    color: #d3fc05;
+}
+.post .content h5 {
+    color: #d3fc05;
+}
+.post .content h6 {
+    color: #d3fc05;
+}
+.post .title {
+    color: #d3fc05;
+    margin-bottom: 0;
+}
+.post .content a:hover {
+    color: #d3fc05;
+}
+.social-link:hover {
+    color: #d3fc05;
+}
+.nav-item-title:hover {
+    color: #d3fc05;
+}
+.tag a:hover {
+    color: #d3fc05;
+}
+.post-preview .title a {
+    color: #d3fc05;
+}
+.content-item a:hover {
+    text-decoration: underline;
+    color: #d3fc05;
+}
+.post-list .title {
+    color: #d3fc05;
+}
+
+.tombstone {
+    color: #d3fc05;
+}
+
+.inline {
+    display: inline;
+}
+
+blockquote > p {
+    margin-left: 10px;
+}
+
+.language-shell .hljs-meta {
+    user-select: none; /* don't allow users to select $ in shell */
+}
+
+img:not([width]) { /* set images to take up the full width, unless I specify a width on them */
+    width: 100%;
+}
+
+            .hljs-comment,
+.hljs-quote
+{
+  color: #456b7c; /* darker version of background */
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion
+{
+  color: #5dcdfd; /* faded light blue */
+}
+
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link,
+.hljs-subst
+{
+  color: #35ddff; /* bright aqua */
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition
+{
+  color: #13CE00; /* verdant green */
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-attribute
+{
+  color: #96FF00; /* yellow green */
+}
+
+.hljs-keyword,
+.hljs-selector-tag
+{
+  color: #1ea8fc; /* cerulean */
+}
+
+.hljs
+{
+  display: block;
+  overflow-x: auto;
+  background: #19272d;
+  color: #b6ced8;
+  padding: 0.5em;
+  font-family: "Source Code Pro", "Consolas", monospace;
+}
+
+.hljs-emphasis
+{
+  font-style: italic;
+}
+
+.hljs-strong
+{
+  font-weight: bold;
+}
+
+        </style>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap">
+        <link rel="stylesheet" href="https://use.typekit.net/uvh1qwh.css">
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a href="/">The Reactor Core</a>
+                    </h1>
+                    <small>Where the engineers hang out</small>
+                </div>
+                <h2 class="nav">
+                    <a href="/about">About</a>
+                </h2>
+            </header>
+            <hr />
+            <section class="main-content">
+                <div class="post">
+    <h2 class="title">5 - Atom is learning the lessons of all of the above</h2>
+    <small>Published 2020-05-05</small>
+    <div class="content">
+        <p>This post is heavily inspired by Mike Kozlowski's post <a href="https://medium.com/@mkozlows/why-atom-cant-replace-vim-433852f4b4d1">Vim's Big Idea</a>, but I'm going to take it in a slightly different direction. In Mike's post, he starts off by talking about the fantastic ideas that came from 1976. Emacs had the great idea that every part of your editing experience should be customizable, and in the same language as the editor was written. Vim had the great idea of using keys as verbs and nouns (so you can say <code>dw</code> to vim and it will delete a word).</p>
+<p>Mike mentions both the Atom text editor and Sublime Text, two editors that are and were also influential for me.</p>
+<h1>Story Time!</h1>
+<p>When I was a young warthog... er, high school student, I came across a book on C++. At that time, I had no idea what editors or IDEs were, but I got a copy of the Borland C++ IDE. My experience with it was awful. I'd write a tiny bit of C++ to solve one of my book's many problems, and clicking run would pop up a windows console for about 3 milliseconds. Then it would disappear, because the program had run its course. I got around it by adding a <code>cin.get()</code> or some such, but that didn't work as soon as my program needed any input. So I gave up and went back to my science classes.</p>
+<h2>College Days</h2>
+<p>I still loved computers and the idea of programming though, enough to enroll in a computer science degree. The first day of Java 101 (I narrowly missed C++ being the language du jour for teaching), the professor sat us down in a linux lab in front of some RHEL GUIs and told us enough vim to get in trouble (<code>vim hello.java</code>, then <code>i</code>, then type all your code, then <code>escape :wq</code>). All of us students promptly ignored him and fired up gedit, resorting to the command line only for the <code>javac</code> commands. At home I found the (still today wonderful) <a href="https://notepad-plus-plus.org/">notepad++</a>. It had cool things like syntax highlighting and being able to tab over (indent) multiple lines in a selection. I was happy with it for a while, but eventually I found Eclipse. Eclipse was great since I was still terrible at Java and it would both find and fix my mistakes.</p>
+<h2>The Early Changes</h2>
+<p>After college, I learned some python and some ruby, and Eclipse was no longer the best thing on the block. It was great for writing Java, but I discovered IntelliJ (which I still use today whenever I have to write any Java code). And an intern showed us all a new text editor: Sublime Text. It was wicked fast, even with huge files, and it had multiple cursors, goto anything, a tree view, a package manager, and all of the modern conveniences. But more than anything, Sublime was <em>beautiful</em>. Text was rendered incredibly sharply, even on my desktop at home with an embarassingly low PPI count. All the pieces looked like a cohesive whole.</p>
+<p>Sublime text was also my first time really digging into my editor's settings. Sublime had the fantastic idea to have plain text settings, which makes them incredibly easy to back up and restore. It also made it easy for me to try Sublime's Vintage mode, which gives vim commands. At this point, my only experience with vim was being wowed by one of the wizards in my programming class fixing a bug in real time on the projector in vim. He was copy pasting code and jumping to bookmarks and using all manner of motions that blew my mind. So I gave it a try and I got hooked.</p>
+<h2>All that is old is new again</h2>
+<p>So hooked was I on Sublime Text's Vintage mode that I decided to try the real thing. Vim was harsh and unforgiving, but it was a sharp tool. And like many sharp tools it's easy to cut yourself, but you can also work faster than with duller instruments. I slowly learned a few things at a time, and eventually became somewhat okay at vim. And then I got rescued.</p>
+<p>I had heard of Emacs but I tried it once and went <code>ctrl-x ctrl-c</code>? Nope. But there's a prominent figure in the ruby community named Bozhidar Batsov. He created Rubocop (<em>the</em> ruby linter) and also maintains an emacs distribution named <a href="https://github.com/bbatsov/prelude">Prelude</a>. Prelude introduced me to how nice Emacs could be. It set everything up for me, and made it a little easier to learn. Neither it nor vim were as nice as sublime text, but it was nicer than vim.</p>
+<h2>Take me to your <leader></h2>
+<p>And then I heard about another emacs distro, one that promised to make vim and emacs play nicely together. From the <a href="https://www.spacemacs.org/">spacemacs.org website</a></p>
+<blockquote>
+<p>Spacemacs is a new way to experience Emacs -- a sophisticated and polished set-up focused on <strong>ergonomics, mnemonics and consistency.</strong></p>
+</blockquote>
+<p>I read through all the documentation, and got set up. That tagline was not a joke. Spacemacs is set up around one amazing central idea. Everything you want to do should be accessible through a mnemonic series of keys.</p>
+<p>Regular emacs is really focused on key &quot;chords&quot;, where you press many keys at once. Quitting is press and hold control, then press and release x, then press and release c, then release control. Spacemacs took vim's idea of a &quot;leader&quot; key, which by default was the spacebar (thus <em>Space</em> - macs). So to quit was <code>space q q</code> (Leader Quit: Quit all). Saving a file was <code>space f s</code> (Leader Files: save file). Editing the .spacemacs file was <code>space f e D</code> (Leader Files: Edit: Dotfile).</p>
+<p>This focus on mnemonics and consistency meant that learning new commands was easy. As soon as you hit space, all the possible prefixes would pop up at the bottom of the screen. Hit <code>space f</code>, and all the commands related to files would pop up.</p>
+<p>Spacemacs even had a wonderful community on gitter.io, which really helped with the quite often I'd still get stuck deep in the yak-shaving weeds.</p>
+<p>And then a bomb dropped out of the sky.</p>
+<h1>GitHub has entered the battle</h1>
+<p>GitHub, the most popular source code host (not coincidentally where this blog is hosted!) decided that they wanted to make a modern editor, but one that was still hackable to the very core. Atom was a bit slower than Sublime, a bit less extensible than emacs, and a bit less open than vim. But it had many of the best ideas of all the editors I'd tried. The focus on beauty, multiple cursors, and many of the UI elements came from Sublime Text. The ease of redefining core functions and keyboard shortcuts came from Emacs. The community aspects came from Spacemacs. Eventually, they open sourced even the core of the editor, inspired in part by the older editors like vim.</p>
+<p>The cool thing about Atom was that it was built on the same technology everyone was already using. It was a thick client application, but built on the web technology that was and is taking over the world. You could write packages in coffeescript or javascript, with Less for CSS, and regular HTML for presentation. Atom was totally free, as in speech and as in beer.</p>
+<p>The ideas behind atom were so good that the open core broke off from being &quot;atom-shell&quot; and rebranded itself &quot;Electron&quot;. (It's the core of the atom, get it? <em>elbow</em>). Electron was so great that a bunch of other companies have picked it up and used it, including slack and teams.</p>
+<p>Atom's team was full of brilliant people, and one of the things they came up with was a new type of parser called a Tree Sitter parser. It's incremental, fast, and great for syntax highlighting and similar concerns of editors.</p>
+<h2>Electron text editors</h2>
+<p>I would be remiss not to talk about the elephant in the room. Microsoft got way ahead of the online editor/ide thing and started developing a web based visual studio, codenamed Monaco. When Electron came around, they saw the opportunity and created Visual Studio Code. It was a stripped down, free, visual studio. Importantly, it shared the same cross platform heritage as Atom. Microsoft wanted to differentiate the two editors, so they had a very different setup for their UI, and focused hard on the IDE aspects: intellisense (their auto-completion), a built in terminal emulator, and a built in debugger.</p>
+<p>Microsoft also had literally the best idea since vim and emacs. Instead of having boutique plugins for every single editor and IDE times every single programming language, you could evolve the two independently. The Language Server Protocol is a JSON protocol for making editors smart. Contextual auto-completion, intelligent refactoring, you name it. If your favorite IDE can do it, LSP probably can too.</p>
+<h2>Today</h2>
+<p>These days, both Atom and VS Code are popular (though code appears to be more popular from my informal surveying and the number of community PRs it gets). I still use Atom because Vim Mode Plus is better than vim at doing vim things in many respects, and because I feel comfortable writing packages for it. Check out my (basically complete) <a href="https://atom.io/packages/git-links">git links</a> package, my (beta quality) rainbow parens package: <a href="https://atom.io/packages/prismatic-parens">prismatic parens</a>, and my (alpha quality) (vim mode plus macros)[https://atom.io/packages/vim-mode-plus-macros] package. I always love PRs, so feel free to PR them!</p>
+<h1>Summary</h1>
+<p>Text editing has gotten incredibly better over the few years I've been programming. From simple things like vertical lines at 80 and 120 characters to incredibly complex multiple cursor macros, the state of the art has been constantly improving. Atom has taken many of the best ideas and put them all into a single editor. <a href="https://atom.io/">Give it a try!</a></p>
+
+        <span class="tombstone">&#9670;</span>
+    </div>
+</div>
+
+            </section>
+            <footer>
+                <!-- TODO: Add some content to my footer -->
+            </footer>
+        </div>
+    </body>
+</html>
