@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>The Reactor Core</title>
+        <style media="screen">
+            /* note: not actually a sass file, just using that for syntax highlighting */
+
+/*
+ * main green: #d3fc05
+ */
+
+body {
+    background: #101010;
+    color: #c8d1b8;
+    font-family: gitan-latin; Tahoma, Verdana, sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
+    padding: 50px;
+}
+
+/* Thanks llogiq for the style inspiration! */
+.wrapper {
+    width: 860px;
+    margin: 0 auto;
+}
+
+@media print, screen and (max-width: 960px) {
+    div.wrapper {
+        width: auto;
+        margin: 0;
+    }
+}
+
+@media print, screen and (max-width: 720px) {
+    body {
+        word-wrap: break-word;
+    }
+
+    pre, code {
+        word-wrap: normal;
+    }
+}
+
+@media print, screen and (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20pt;
+    }
+
+    h2 {
+        font-size: 16pt;
+    }
+
+    h3 {
+        font-size: 14pt;
+    }
+}
+
+@media print {
+    body {
+        padding: 0.4in;
+        font-size: 12pt;
+        color: #444;
+    }
+}
+
+a {
+    transition: text-shadow 0.5s;
+    color: #d6f1fc;
+}
+a:hover {
+    text-shadow: 0 0 10px #a9cc66;
+}
+pre {
+    background: #1D1F21;
+    border: 1px solid #5C5C5C;
+    border-radius: 5px;
+}
+code {
+    background: #1D1F21;
+    color: #0088FF;
+    font-family: "Source Code Pro", monospace;
+}
+blockquote {
+    background: #1D1F21;
+    border-left: 3px solid #d3fc05;
+}
+
+blockquote > p {
+    padding-bottom: 0.5em;
+}
+table {
+    margin: 1em auto;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid #5C5C5C;
+}
+tr:hover {
+    background: #1D1F21;
+}
+th {
+    background: #1D1F21;
+}
+small {
+    /* slightly faded and dimmed version of the body text color */
+    color: #a4a5a2
+}
+
+header a, h1, h2, h3, h4, h5, h6 {
+    font-family: Tahoma, Verdana, sans-serif;
+}
+
+.site-title-wrapper {
+    width: 400px;
+    display: inline-block;
+}
+.site-title {
+    margin: 0;
+}
+.site-title a, .glow {
+    color: #d3fc05;
+    text-decoration: none;
+    animation-name: radiate;
+    animation-duration: 5s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes radiate {
+    0% { text-shadow: 0 0 2px #a9cc66; }
+    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05}
+    100% { text-shadow: 0 0 2px #a9cc66; }
+}
+
+.nav {
+    margin: 10px 0;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.nav a {
+    color: #d3fc05;
+    text-decoration: none;
+}
+
+.post .content h1 {
+    color: #d3fc05;
+}
+.post .content h2 {
+    color: #d3fc05;
+}
+.post .content h3 {
+    color: #d3fc05;
+}
+.post .content h4 {
+    color: #d3fc05;
+}
+.post .content h5 {
+    color: #d3fc05;
+}
+.post .content h6 {
+    color: #d3fc05;
+}
+.post .title {
+    color: #d3fc05;
+    margin-bottom: 0;
+}
+.post .content a:hover {
+    color: #d3fc05;
+}
+.social-link:hover {
+    color: #d3fc05;
+}
+.nav-item-title:hover {
+    color: #d3fc05;
+}
+.tag a:hover {
+    color: #d3fc05;
+}
+.post-preview .title a {
+    color: #d3fc05;
+}
+.content-item a:hover {
+    text-decoration: underline;
+    color: #d3fc05;
+}
+.post-list .title {
+    color: #d3fc05;
+}
+
+.tombstone {
+    color: #d3fc05;
+}
+
+.inline {
+    display: inline;
+}
+
+blockquote > p {
+    margin-left: 10px;
+}
+
+.language-shell .hljs-meta {
+    user-select: none; /* don't allow users to select $ in shell */
+}
+
+img:not([width]) { /* set images to take up the full width, unless I specify a width on them */
+    width: 100%;
+}
+
+            .hljs-comment,
+.hljs-quote
+{
+  color: #456b7c; /* darker version of background */
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion
+{
+  color: #5dcdfd; /* faded light blue */
+}
+
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link,
+.hljs-subst
+{
+  color: #35ddff; /* bright aqua */
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition
+{
+  color: #13CE00; /* verdant green */
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-attribute
+{
+  color: #96FF00; /* yellow green */
+}
+
+.hljs-keyword,
+.hljs-selector-tag
+{
+  color: #1ea8fc; /* cerulean */
+}
+
+.hljs
+{
+  display: block;
+  overflow-x: auto;
+  background: #19272d;
+  color: #b6ced8;
+  padding: 0.5em;
+  font-family: "Source Code Pro", "Consolas", monospace;
+}
+
+.hljs-emphasis
+{
+  font-style: italic;
+}
+
+.hljs-strong
+{
+  font-weight: bold;
+}
+
+        </style>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap">
+        <link rel="stylesheet" href="https://use.typekit.net/uvh1qwh.css">
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a href="/">The Reactor Core</a>
+                    </h1>
+                    <small>Where the engineers hang out</small>
+                </div>
+                <h2 class="nav">
+                    <a href="/about">About</a>
+                </h2>
+            </header>
+            <hr />
+            <section class="main-content">
+                <div class="post">
+    <h2 class="title">6 - Monster Train</h2>
+    <small>Published 2020-06-04</small>
+    <div class="content">
+        <p>Hi friends. Welcome back. My usual nights for writing have been a little busier of late, since we've been doing board games Tuesdays <em>and</em> Thursdays, but now I'm back and ready to write some more! Today's topic is an indie game called <a href="https://www.themonstertrain.com/">Monster Train</a>.</p>
+<h1>What's a Monster Train?</h1>
+<p>Monster Train follows an interesting timeline. The forces of Heaven, known as the winged, have defeated the forces of Hell. Now Hell is frozen over. This is unfortunate, since the dynamic now lacks balance. Fortunately, a small shard of Hell's Pyre remains, and if we can just get it back there, we can reignite the fires. The way we accomplish that is on a very tall train (4 levels!) called the Boneshaker.</p>
+<p>That's the lore. The gameplay is inspired. I still don't understand what makes it so addictive. If you've ever played <a href="https://www.megacrit.com/">Slay the Spire</a>, it's a similar concept. You have a deck of cards. You have no shortage of enemies, and a fairly small life total. Add, upgrade, and remove cards from your deck to make one strong enough to beat everything you come across. However, there's an additional element that slay the spire does not have. Monster Train adds a 2 dimensional grid for units to fight across.</p>
+<h1>A 2d grid adds more strategy</h1>
+<p>If you've ever played a trading card game (I'd suggest <a href="https://magic.wizards.com/en/mtgarena">Magic the Gathering: Arena</a> if you'd like to try!), you often lay your cards out in a grid. In Magic and similar games, this is out of convenience (lands go behind creatures just to keep them from getting mixed up).</p>
+<p>Blizzard's Hearthstone: Heroes of Warcraft, added a single dimension: order. In Hearthstone, units and spells can buff and target multiple things in a row or beside each other. So a Defender of Argus, for example, gives adjacent minions extra stats and a keyword: Taunt.</p>
+<img src="../img/defender-of-argus.png" alt="Defender of Argus Card face" width="300px" />
+<p>Hearthstone gained a lot of strategic depth from cards that care about the locations of other cards. During their single player campaign, there were several enemy heroes that only affected the minion farthest to the right.</p>
+<p>Another trading card game that used a similar concept was called Duelyst. I say was, because Duelyst didn't make enough money to pay its developers, despite being a beautiful, thinky strategy game. Duelyst had you place units on a 2d grid. Each turn a unit could move 2 spaces in any combination of up, right, down, or left. Once a unit had moved, it could then attack anything close enough. Having the 2d grid let Duelyst enable a lot of interesting gameplay. On the map were 2 orbs that contained one energy. First person to charge the middle could get one of those orbs and have extra energy to play units and spells. Some spells would create walls that made it harder to walk where you wanted to go. One unit would create ranged units in every open corner when he died. You could surround a creature or general completely and then they would be unable to move anywhere. I was quite sad to see Duelyst go, I really enjoyed it.</p>
+<p><img src="../img/duelyst.png" alt="Duelyst"></p>
+<h1>Tell me more about this Monster Train game</h1>
+<p>You got it. In monster train, you play as the forces of Hell.</p>
+<h2>Gameplay</h2>
+<p>The Boneshaker (your train) has three levels you can place units on, and a fourth level that contains your Pyre. Before each turn, units of the Winged will spawn on the bottom floor. During your turn you play units and spells from your hand using &quot;Ember&quot;, which is this game's mana. When you click &quot;End Turn&quot;, the enemy units attack, then any of your units that survived hit back. Once combat is resolved, the surviving enemy units move up a level in your train. If any enemy units get up to your pyre, they attack it and it attacks them until one or the other dies. If your pyre dies, you have lost the run.</p>
+<p><img src="../img/mt-battle.png" alt="Monster Train - During a Battle"></p>
+<p>After each battle, you get a chance to regroup and add, upgrade, and remove cards. Winning a battle gives you some gold, and a pack of (usually spells) for each of the two factions you're playing (we'll talk about the factions in the next section). In between battles, you get the choice of one of two tracks to go down. Tracks can offer unit drafts, which give you a choice between units of the same faction. They can offer gold, the ability to remove 2 cards from your deck, or the ability to make an exact duplicate of a card. Tracks can offer shops, where you can pay to remove cards or upgrade them with runes (each card has 2 upgrade slots). Or tracks can have a &quot;crystalline caverns&quot;, which is a random beneficial event.</p>
+<p><img src="../img/mt-between.png" alt="Monster Train - Between Battles"></p>
+<p>There are three kinds of shops. One sells only unit upgrades, like +10 attack, +25 health, or a keyword like multi-strike or endless. One sells only spell upgrades, like making a spell cheaper or making it deal more damage. And the final one sells artifacts, which are passive effects that last for an entire run. One relic gives your basic units, train stewards, multi-strike and damage shield 2. Another gives all your spells +3 magic power. Yet another gives you one additional capacity on each floor.</p>
+<h2>Factions</h2>
+<p>There are five factions (clans) in Monster Train, and you start with 2 unlocked. <strong>Minor Spoilers ahead, turn back now if you want the locked factions to be a surprise!</strong> The factions are as follows (in the order you unlock them):</p>
+<p>The hellhorned are your first and most basic faction. Their hero can get multi-strike, some buffs on kill or taking damage, or flat damage on kill. Units are a mixture of demons and imps, and spells are basic targeted direct damage spells. The faction keywords are Rage, which is a decaying attack damage buff, and Armor, which is a flat temporary hit points. Imps deserve special mention. They are always 1/1, which is pitifully low (the humble train steward is a 5/8), but they always come with a spell-like effect upon summoning them. There are also many spells that interact with them.</p>
+<p>The Awoken are your second faction, and both my wife and I's favorite. Their hero has no attack, but can be upgraded to deal damage when it is healed, draw when it is damaged, or have a lot of spikes. Units are a mixture of weak units with strong keywords and strong units who start with health missing. Spells are buffs and healing. The faction keywords are Regen, which is a decaying heal that happens after combat, and Spikes, which is a flat amount of damage dealt to attackers. Awoken pairs well with all other factions because the hero and many of the units are quite tanky, so you can let the other faction's units shine without fear of them dying.</p>
+<p>The first unlockable faction is the Stygian Guard, which are the spell casters of the bunch. You unlock them by playing spells. Their hero can cheapen spells, apply frostbite, or apply spell weakness. Frostbite is a decaying damage over time, similar to Slay the Spire's poison. Spell weakness is consumed when you use a spell to multiply the spell's damage. Some units are weak units with sweep (so they hit all enemies on the floor instead of just the front one) that also apply spell weakness or frostbite. Others have incant, which triggers a small buff when you cast a spell on the same floor. Stygian spells mostly hit the front unit, but they hit incredibly hard, especially when paired with spell weakness. A few spells also have the keyword offering, which means you play them if they are discarded (similar to madness 0 in magic: the gathering).</p>
+<p>The second unlockable faction is the Umbra, which are the forces of darkness. You unlock them by playing units, which is fitting. Their hero can expand floors to hold more units, gain trample so his attacks spill over onto later units, or get additional health and damage from eating morsels. Wait, what are morsels? Umbra can create tiny units with weak stats called morsels. At the end of combat, all morsels are eaten by the front non-morsel unit for buffs. Umbra units either have the keyword Gorge, which does something when they eat a morsel, or help you get more morsels on the field. Umbra spells are mainly concerned with creating morsels and unit capacity. Each unit has a &quot;width&quot;, which you can see at the top of its card. You start with 5 capacity on each floor, and other factions can only increase it after a boss.</p>
+<p>The final unlockable faction is the Melting Remnant, who are sentient candles. You unlock them by killing things, which is once again fitting. Their hero can gain burnout and major stats, a health buff when units die (Harvest), or an after combat effect that Re-forms a friendly unit that has died. Burnout makes a unit only last a few turns before dying automatically. Harvest effects trigger when any unit dies on this floor. Reform recreates a unit with better stats and another level of burnout. Melting Remnant is the only faction whose starter card is a unit, the lowly Dreg (9/3 Burnout 2). Other Melting Remnant units are attackers with short fuses, bombs that trigger on death, and cards that give you bonuses when units die. Spells are mostly unit buffs and spells to reform dead units.</p>
+<h2>Structure of a run</h2>
+<p>When you start a run, you pick a primary and an allied faction. Your starting deck contains the hero from your primary faction, 4 train stewards, and 3 of each of the factions' starter cards. Hellhorned's starter card is a targeted deal 2 damage spell. Awoken's is heal 2, add regen 1. Stygian's deals 6 damage to the front enemy unit. Umbra's creates a basic morsel. Melting Remnant's, as mentioned above, is a unit that dies quickly.</p>
+<p>At the start of the run, you get a hero upgrade and you get to choose an artifact from 2. Then you go into your first battle. Your third battle will be with a proper boss, who sticks around the entire fight being annoying instead of just showing up at the end of the fight like the previous mini bosses. This same structure repeats 2 more times for a total of 9 battles and 3 major bosses. The final boss is Seraph, and many of my runs have died to him.</p>
+<p>After a run is over (win or lose), you gain experience based on how well you did. That experience applies equally to both clans you used, and leveling them up unlocks new cards and artifacts. If you win at your highest covenant level, you unlock the next covenant level, which allows you to make future runs harder. You also &quot;master&quot; cards, which turns their border gold. It's a nice, easy way to see what cards you've had success with so you can try new strategies.</p>
+<p>All this information is presented in a nice, easy to read way in your log book, which you can view from the single player menu. It shows what faction combinations you've won with, what covenant level you and your friends have unlocked, and lots more.</p>
+<p><img src="../mt-logbook.png" alt="Monster Train - Log Book"></p>
+<h1>Summary</h1>
+<p>Monster Train is a super fun and addictive rogue-lite deckbuilder. My wife and I have been having a ton of fun playing it. The developer is still very active (I've already noticed several balance tweaks!) and has an active discord server. If you're interested, go <a href="https://store.steampowered.com/app/1102190/Monster_Train/">buy it right now on steam</a>! If you're still not convinced, I'd encourage you to check out the Canadian streamer NorthernLion, who got early access to the game and is <a href="https://www.youtube.com/playlist?list=PL1bauNEiHIgzzZ8mq1qbVMv5HkpytKnnR">currently doing a whole series on it</a>. Thanks for reading!</p>
+
+        <span class="tombstone">&#9670;</span>
+    </div>
+</div>
+
+            </section>
+            <footer>
+                <!-- TODO: Add some content to my footer -->
+            </footer>
+        </div>
+    </body>
+</html>
