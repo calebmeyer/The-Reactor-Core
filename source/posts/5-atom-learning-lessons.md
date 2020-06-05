@@ -23,7 +23,7 @@ So hooked was I on Sublime Text's Vintage mode that I decided to try the real th
 
 I had heard of Emacs but I tried it once and went `ctrl-x ctrl-c`? Nope. But there's a prominent figure in the ruby community named Bozhidar Batsov. He created Rubocop (_the_ ruby linter) and also maintains an emacs distribution named [Prelude](https://github.com/bbatsov/prelude). Prelude introduced me to how nice Emacs could be. It set everything up for me, and made it a little easier to learn. Neither it nor vim were as nice as sublime text, but it was nicer than vim.
 
-## Take me to your <leader>
+## Take me to your &lt;leader&gt;
 And then I heard about another emacs distro, one that promised to make vim and emacs play nicely together. From the [spacemacs.org website](https://www.spacemacs.org/)
 
 > Spacemacs is a new way to experience Emacs -- a sophisticated and polished set-up focused on **ergonomics, mnemonics and consistency.**
@@ -53,7 +53,7 @@ I would be remiss not to talk about the elephant in the room. Microsoft got way 
 Microsoft also had literally the best idea since vim and emacs. Instead of having boutique plugins for every single editor and IDE times every single programming language, you could evolve the two independently. The Language Server Protocol is a JSON protocol for making editors smart. Contextual auto-completion, intelligent refactoring, you name it. If your favorite IDE can do it, LSP probably can too.
 
 ## Today
-These days, both Atom and VS Code are popular (though code appears to be more popular from my informal surveying and the number of community PRs it gets). I still use Atom because Vim Mode Plus is better than vim at doing vim things in many respects, and because I feel comfortable writing packages for it. Check out my (basically complete) [git links](https://atom.io/packages/git-links) package, my (beta quality) rainbow parens package: [prismatic parens](https://atom.io/packages/prismatic-parens), and my (alpha quality) (vim mode plus macros)[https://atom.io/packages/vim-mode-plus-macros] package. I always love PRs, so feel free to PR them!
+These days, both Atom and VS Code are popular (though code appears to be more popular from my informal surveying and the number of community PRs it gets). I still use Atom because Vim Mode Plus is better than vim at doing vim things in many respects, and because I feel comfortable writing packages for it. Check out my (basically complete) [git links](https://atom.io/packages/git-links) package, my (beta quality) rainbow parens package: [prismatic parens](https://atom.io/packages/prismatic-parens), and my (alpha quality) [vim mode plus macros](https://atom.io/packages/vim-mode-plus-macros) package. I always love PRs, so feel free to PR them!
 
 # Summary
 Text editing has gotten incredibly better over the few years I've been programming. From simple things like vertical lines at 80 and 120 characters to incredibly complex multiple cursor macros, the state of the art has been constantly improving. Atom has taken many of the best ideas and put them all into a single editor. [Give it a try!](https://atom.io/)

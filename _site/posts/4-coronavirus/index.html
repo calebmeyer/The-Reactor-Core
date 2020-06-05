@@ -20,6 +20,12 @@ body {
     padding: 50px;
 }
 
+/* light color scheme: https://coolors.co/d3fc05-2b303a-f6f7eb-3abecf-7c7c7c */
+body.light {
+    background: #f6f7eb;
+    color: #2B303A;
+}
+
 /* Thanks llogiq for the style inspiration! */
 .wrapper {
     width: 860px;
@@ -73,9 +79,19 @@ a {
     transition: text-shadow 0.5s;
     color: #d6f1fc;
 }
+
+body.light a {
+    color: #3abecf;
+}
+
 a:hover {
     text-shadow: 0 0 10px #a9cc66;
 }
+
+body.light a:hover {
+    text-shadow: 0 0 10px #3abecf;
+}
+
 pre {
     background: #1D1F21;
     border: 1px solid #5C5C5C;
@@ -89,6 +105,26 @@ code {
 blockquote {
     background: #1D1F21;
     border-left: 3px solid #d3fc05;
+}
+
+body.light pre {
+    background: #f6f7eb;
+    color: #2B303A;
+}
+
+body.light blockquote {
+    background: #f6f7eb;
+    color: #2B303A;
+    border-left: 3px solid #95f3ff;
+}
+
+body.light code {
+    background: #f6f7eb;
+    color: #3abecf;
+}
+body.light code.hljs {
+    background: #1d1f21;
+    color: #b6ced8;
 }
 
 blockquote > p {
@@ -107,9 +143,17 @@ tr:hover {
 th {
     background: #1D1F21;
 }
+body.light tr:hover, body.light th {
+    background: #f6f7eb;
+}
+
 small {
     /* slightly faded and dimmed version of the body text color */
-    color: #a4a5a2
+    color: #a4a5a2;
+}
+
+body.light small {
+    color: #404752;
 }
 
 header a, h1, h2, h3, h4, h5, h6 {
@@ -132,10 +176,21 @@ header a, h1, h2, h3, h4, h5, h6 {
     animation-iteration-count: infinite;
 }
 
+body.light .site-title a, body.light .glow {
+    color: #3abecf;
+    animation-name: radiate-light;
+}
+
 @keyframes radiate {
     0% { text-shadow: 0 0 2px #a9cc66; }
-    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05}
+    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05; }
     100% { text-shadow: 0 0 2px #a9cc66; }
+}
+
+@keyframes radiate-light {
+    0% { text-shadow: 0 0 2px #95f3ff; }
+    50% { text-shadow: 0 0 30px #95f3ff; }
+    100% { text-shadow: 0 0 2px #95f3ff; }
 }
 
 .nav {
@@ -148,6 +203,10 @@ header a, h1, h2, h3, h4, h5, h6 {
 .nav a {
     color: #d3fc05;
     text-decoration: none;
+}
+
+body.light .nav a {
+    color: #3abecf;
 }
 
 .post .content h1 {
@@ -197,6 +256,55 @@ header a, h1, h2, h3, h4, h5, h6 {
 
 .tombstone {
     color: #d3fc05;
+}
+
+body.light .post .content h1 {
+    color: #3abecf;
+}
+body.light .post .content h2 {
+    color: #3abecf;
+}
+body.light .post .content h3 {
+    color: #3abecf;
+}
+body.light .post .content h4 {
+    color: #3abecf;
+}
+body.light .post .content h5 {
+    color: #3abecf;
+}
+body.light .post .content h6 {
+    color: #3abecf;
+}
+body.light .post .title {
+    color: #3abecf;
+    margin-bottom: 0;
+}
+body.light .post .content a:hover {
+    color: #3abecf;
+}
+body.light .social-link:hover {
+    color: #3abecf;
+}
+body.light .nav-item-title:hover {
+    color: #3abecf;
+}
+body.light .tag a:hover {
+    color: #3abecf;
+}
+body.light .post-preview .title a {
+    color: #3abecf;
+}
+body.light .content-item a:hover {
+    text-decoration: underline;
+    color: #3abecf;
+}
+body.light .post-list .title {
+    color: #3abecf;
+}
+
+body.light .tombstone {
+    color: #3abecf;
 }
 
 .inline {
@@ -295,7 +403,7 @@ img:not([width]) { /* set images to take up the full width, unless I specify a w
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
     </head>
-    <body>
+    <body class="dark">
         <div class="wrapper">
             <header>
                 <div class="site-title-wrapper">
