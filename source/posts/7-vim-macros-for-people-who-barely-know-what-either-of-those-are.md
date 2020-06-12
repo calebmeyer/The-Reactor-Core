@@ -29,7 +29,7 @@ If you're only mildly familiar with computers, you'll often reach for a mouse fo
 It's fairly quick, only a few seconds if you have a steady mouse hand. You end up having to hit a lot of small targets ([Fitt's Law](https://www.interaction-design.org/literature/topics/fitts-law) will bite you sometimes), but the consequences of missing are pretty low.
 
 ### Average User
-After a few years of computer use, you'll learn a few keyboard shortcuts to help you. Instead of using the context (right-click) menus, you learn to use <kbd>Control</kbd>-<kbd>X</kbd> to cut, and <kbd>Control</kbd>-<kbd>V</kbd> to paste. You still move your hands back and forth between the mouse and the keyboard, but no text is moved except when you're already sure the cursor is in the correct spot.
+After a few years of computer use, you'll learn a few keyboard shortcuts to help you. Instead of using the context (right-click) menus, you learn to use <kbd>Control</kbd>-<kbd>x</kbd> to cut, and <kbd>Control</kbd>-<kbd>v</kbd> to paste. You still move your hands back and forth between the mouse and the keyboard, but no text is moved except when you're already sure the cursor is in the correct spot.
 
 ### Power User
 After a few more years of computer use, you'll learn that the shift key selects text, and that you can combine it with movements. Sometime along the way, you'll also learn what Home and End do (move to the beginning and end of the current line, respectively). So your new workflow will look something like:
