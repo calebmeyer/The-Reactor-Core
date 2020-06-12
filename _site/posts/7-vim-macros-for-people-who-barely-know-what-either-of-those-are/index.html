@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>The Reactor Core</title>
+        <style media="screen">
+            /* note: not actually a sass file, just using that for syntax highlighting */
+
+/*
+ * main green: #d3fc05
+ */
+
+body {
+    background: #101010;
+    color: #c8d1b8;
+    font-family: gitan-latin; Tahoma, Verdana, sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
+    padding: 50px;
+}
+
+/* light color scheme: https://coolors.co/d3fc05-2b303a-f6f7eb-3abecf-7c7c7c */
+body.light {
+    background: #f6f7eb;
+    color: #2B303A;
+}
+
+/* Thanks llogiq for the style inspiration! */
+.wrapper {
+    width: 860px;
+    margin: 0 auto;
+}
+
+@media print, screen and (max-width: 960px) {
+    div.wrapper {
+        width: auto;
+        margin: 0;
+    }
+}
+
+@media print, screen and (max-width: 720px) {
+    body {
+        word-wrap: break-word;
+    }
+
+    pre, code {
+        word-wrap: normal;
+    }
+}
+
+@media print, screen and (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20pt;
+    }
+
+    h2 {
+        font-size: 16pt;
+    }
+
+    h3 {
+        font-size: 14pt;
+    }
+}
+
+@media print {
+    body {
+        padding: 0.4in;
+        font-size: 12pt;
+        color: #444;
+    }
+}
+
+a {
+    transition: text-shadow 0.5s;
+    color: #d6f1fc;
+}
+
+body.light a {
+    color: #3abecf;
+}
+
+a:hover {
+    text-shadow: 0 0 10px #a9cc66;
+}
+
+body.light a:hover {
+    text-shadow: 0 0 10px #3abecf;
+}
+
+pre {
+    background: #1D1F21;
+    border: 1px solid #5C5C5C;
+    border-radius: 5px;
+}
+code {
+    background: #1D1F21;
+    color: #0088FF;
+    font-family: "Source Code Pro", monospace;
+}
+blockquote {
+    background: #1D1F21;
+    border-left: 3px solid #d3fc05;
+}
+
+body.light pre {
+    background: #f6f7eb;
+    color: #2B303A;
+}
+
+body.light blockquote {
+    background: #f6f7eb;
+    color: #2B303A;
+    border-left: 3px solid #95f3ff;
+}
+
+body.light code {
+    background: #f6f7eb;
+    color: #3abecf;
+}
+body.light code.hljs {
+    background: #1d1f21;
+    color: #b6ced8;
+}
+
+blockquote > p {
+    padding-bottom: 0.5em;
+}
+table {
+    margin: 1em auto;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid #5C5C5C;
+}
+tr:hover {
+    background: #1D1F21;
+}
+th {
+    background: #1D1F21;
+}
+body.light tr:hover, body.light th {
+    background: #f6f7eb;
+}
+
+small {
+    /* slightly faded and dimmed version of the body text color */
+    color: #a4a5a2;
+}
+
+body.light small {
+    color: #404752;
+}
+
+header a, h1, h2, h3, h4, h5, h6 {
+    font-family: Tahoma, Verdana, sans-serif;
+}
+
+.site-title-wrapper {
+    width: 400px;
+    display: inline-block;
+}
+.site-title {
+    margin: 0;
+}
+.site-title a, .glow {
+    color: #d3fc05;
+    text-decoration: none;
+    animation-name: radiate;
+    animation-duration: 5s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+}
+
+body.light .site-title a, body.light .glow {
+    color: #3abecf;
+    animation-name: radiate-light;
+}
+
+@keyframes radiate {
+    0% { text-shadow: 0 0 2px #a9cc66; }
+    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05; }
+    100% { text-shadow: 0 0 2px #a9cc66; }
+}
+
+@keyframes radiate-light {
+    0% { text-shadow: 0 0 2px #95f3ff; }
+    50% { text-shadow: 0 0 30px #95f3ff; }
+    100% { text-shadow: 0 0 2px #95f3ff; }
+}
+
+.nav {
+    margin: 10px 0;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.nav a {
+    color: #d3fc05;
+    text-decoration: none;
+}
+
+body.light .nav a {
+    color: #3abecf;
+}
+
+.post .content h1 {
+    color: #d3fc05;
+}
+.post .content h2 {
+    color: #d3fc05;
+}
+.post .content h3 {
+    color: #d3fc05;
+}
+.post .content h4 {
+    color: #d3fc05;
+}
+.post .content h5 {
+    color: #d3fc05;
+}
+.post .content h6 {
+    color: #d3fc05;
+}
+.post .title {
+    color: #d3fc05;
+    margin-bottom: 0;
+}
+.post .content a:hover {
+    color: #d3fc05;
+}
+.social-link:hover {
+    color: #d3fc05;
+}
+.nav-item-title:hover {
+    color: #d3fc05;
+}
+.tag a:hover {
+    color: #d3fc05;
+}
+.post-preview .title a {
+    color: #d3fc05;
+}
+.content-item a:hover {
+    text-decoration: underline;
+    color: #d3fc05;
+}
+.post-list .title {
+    color: #d3fc05;
+}
+
+.tombstone {
+    color: #d3fc05;
+}
+
+body.light .post .content h1 {
+    color: #3abecf;
+}
+body.light .post .content h2 {
+    color: #3abecf;
+}
+body.light .post .content h3 {
+    color: #3abecf;
+}
+body.light .post .content h4 {
+    color: #3abecf;
+}
+body.light .post .content h5 {
+    color: #3abecf;
+}
+body.light .post .content h6 {
+    color: #3abecf;
+}
+body.light .post .title {
+    color: #3abecf;
+    margin-bottom: 0;
+}
+body.light .post .content a:hover {
+    color: #3abecf;
+}
+body.light .social-link:hover {
+    color: #3abecf;
+}
+body.light .nav-item-title:hover {
+    color: #3abecf;
+}
+body.light .tag a:hover {
+    color: #3abecf;
+}
+body.light .post-preview .title a {
+    color: #3abecf;
+}
+body.light .content-item a:hover {
+    text-decoration: underline;
+    color: #3abecf;
+}
+body.light .post-list .title {
+    color: #3abecf;
+}
+
+body.light .tombstone {
+    color: #3abecf;
+}
+
+.inline {
+    display: inline;
+}
+
+blockquote > p {
+    margin-left: 10px;
+}
+
+.language-shell .hljs-meta {
+    user-select: none; /* don't allow users to select $ in shell */
+}
+
+img:not([width]) { /* set images to take up the full width, unless I specify a width on them */
+    width: 100%;
+}
+
+kbd {
+	background-color: #444;
+	color: #c8d1b8;
+	padding: 4px 10px;
+	border-radius: 4px;
+	border: 3px solid #aaa;
+}
+
+            .hljs-comment,
+.hljs-quote
+{
+  color: #456b7c; /* darker version of background */
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion
+{
+  color: #5dcdfd; /* faded light blue */
+}
+
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link,
+.hljs-subst
+{
+  color: #35ddff; /* bright aqua */
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition
+{
+  color: #13CE00; /* verdant green */
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-attribute
+{
+  color: #96FF00; /* yellow green */
+}
+
+.hljs-keyword,
+.hljs-selector-tag
+{
+  color: #1ea8fc; /* cerulean */
+}
+
+.hljs
+{
+  display: block;
+  overflow-x: auto;
+  background: #19272d;
+  color: #b6ced8;
+  padding: 0.5em;
+  font-family: "Source Code Pro", "Consolas", monospace;
+}
+
+.hljs-emphasis
+{
+  font-style: italic;
+}
+
+.hljs-strong
+{
+  font-weight: bold;
+}
+
+        </style>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap">
+        <link rel="stylesheet" href="https://use.typekit.net/uvh1qwh.css">
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body class="dark">
+        <div class="wrapper">
+            <header>
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a href="/">The Reactor Core</a>
+                    </h1>
+                    <small>Where the engineers hang out</small>
+                </div>
+                <h2 class="nav">
+                    <a href="/about">About</a>
+                </h2>
+            </header>
+            <hr />
+            <section class="main-content">
+                <div class="post">
+    <h2 class="title">7 - Vim Macros For People Who Barely Know What Either of Those Are</h2>
+    <small>Published 2020-06-11</small>
+    <div class="content">
+        <h1>Vim</h1>
+<p>Vim is a text editor with a long and storied history. I won't bore you with all of it, but if you want to try it for yourself, I suggest <a href="https://neovim.io/">the excellent Neovim project</a>.</p>
+<p>When people first start out with vim, they're usually (hopefully) told that to invoke vim at a command line, you use <code>vim filename.txt</code>. Then you immediately press <kbd>i</kbd> to enter insert mode, and type your text. Later, you press a very important sequence that you absolutely must do in this exact order or it will not work and no one will be able to help you and you'll be stuck in this horrible text editor forever and thinking why did I even sign up for this class I don't even like programming I just thought &quot;how hard could it be&quot; and now I have ended up here and the professor says vim is &quot;important&quot; and I can't even. That sequence is <kbd>Escape</kbd> followed by typing <code>:wq</code> followed by <kbd>Enter</kbd>.</p>
+<p>If, as the young (or not so young, <a href="https://blog.adioma.com/too-late-to-start-life-crisis-infographic/">you're never too old to start</a>) coder in our story, you forget the <code>:</code> in the middle of that arcane &quot;write and quit&quot; command, you're going to end up here:
+<img src="../img/vim-macro.png" alt="vim accidental macro"></p>
+<p>Wait, what? I'm being recorded? My name's not <code>w</code>. What do I do now?</p>
+<h1>Macros</h1>
+<p>Setting aside our story for a minute (yes, this happened to me way too many times to count), what are macros? Why should we care about them?</p>
+<p>A macro, in it's simplest form, is like a function. It has a name, and when you invoke it, it runs through a series of steps in order, then returns control to you. If you've ever looked at gaming keyboards or mice, you may have noticed that many of them have macros, too. Usually the software accompanying such a keyboard will have a &quot;record macro&quot; function, and then an assign macro function. Recording a macro will take down every key you press until you click the button to stop, then it will remember them all. You can then name and assign the macro to a key (some keyboards include dedicated macro keys).
+<img src="../img/keyboard-macro.png" alt="razer macro"></p>
+<h1>So why does it matter?</h1>
+<p>In programming and pro-gaming, you often find there's a complex set of keys required to get a given response. In a game, you might want to crouch-jump, which requires holding and releasing left control at just the right moment as you hit the spacebar. When editing text, you might want to move the line your cursor is in the middle of 3 lines down. Let's use this second example as a thought experiment.</p>
+<h2>Move a line down three lines</h2>
+<h3>Regular User</h3>
+<p>If you're only mildly familiar with computers, you'll often reach for a mouse for this operation. Move the cursor to the left side of the line, click, drag to the right side of the line, release. Right click, &quot;Cut&quot;. Left click at the line you want to paste into. Right click, &quot;Paste&quot;.</p>
+<p>It's fairly quick, only a few seconds if you have a steady mouse hand. You end up having to hit a lot of small targets (<a href="https://www.interaction-design.org/literature/topics/fitts-law">Fitt's Law</a> will bite you sometimes), but the consequences of missing are pretty low.</p>
+<h3>Average User</h3>
+<p>After a few years of computer use, you'll learn a few keyboard shortcuts to help you. Instead of using the context (right-click) menus, you learn to use <kbd>Control</kbd>-<kbd>X</kbd> to cut, and <kbd>Control</kbd>-<kbd>V</kbd> to paste. You still move your hands back and forth between the mouse and the keyboard, but no text is moved except when you're already sure the cursor is in the correct spot.</p>
+<h3>Power User</h3>
+<p>After a few more years of computer use, you'll learn that the shift key selects text, and that you can combine it with movements. Sometime along the way, you'll also learn what Home and End do (move to the beginning and end of the current line, respectively). So your new workflow will look something like:</p>
+<p><kbd>Home</kbd></p>
+<p><kbd>Shift</kbd>-<kbd>End</kbd></p>
+<p><kbd>Control</kbd>-<kbd>x</kbd></p>
+<p><kbd>↓</kbd> x3</p>
+<p><kbd>Control</kbd>-<kbd>v</kbd></p>
+<p>This is a huge improvement. Not only do your hands not leave the keyboard (so you can easily continue typing), you could do this blindfolded. It's faster, it's easier, and it's more consistent because you never mis-click.</p>
+<h3>Power User with a good text editor</h3>
+<p>If you write a lot of code, you may eventually find out that your editor of choice has a command that will move a line of text down directly. In atom, that's <code>Editor: Move Line Down</code>, which by default is mapped to <kbd>Control</kbd>-<kbd>↓</kbd>. This is even simpler than before, because it doesn't require you to select the line, just to get the cursor inside it.</p>
+<h3>Vim User</h3>
+<p>The intermediate vim user is actually at a slight disadvantage here compared to someone who knows their text editor better. In terms of raw number of keys pressed, you're looking at more no matter how you slice it. I'd consider myself an intermediate vim user, and here's how I'd accomplish this task:</p>
+<p><kbd>Escape</kbd> (enter normal mode)</p>
+<p><kbd>d</kbd>-<kbd>d</kbd> (the first d is short for delete, and repeating any verb in vim makes it act on the current line)</p>
+<p><kbd>3</kbd>-<kbd>j</kbd> (3 times do: move down)</p>
+<p><kbd>p</kbd> (paste)</p>
+<p>Now instead of 3 key &quot;chords&quot; (holding down control and down arrow), there are 6 keys pressed (or 7 if you use <code>jk</code> instead of <code>escape</code>, <a href="https://github.com/calebmeyer/dotfiles/blob/master/vim/vimrc#L162-L163">like I do</a>).</p>
+<h2>You still haven't said what this has to do with macros...</h2>
+<p>Indeed I have not. Here's the payoff. In vim (and emacs, which originally stood for &quot;Editor MACroS&quot;), you have another command: <code>Repeat</code>. In vim it's bound to <kbd>.</kbd> (period) while in normal mode. (in Emacs it's <code>control-x z</code>, or <code>C-x z</code> if you use the usual way of documenting keymaps in emacs) Repeat is super helpful if you want to delete a number of words you don't know ahead of time (<code>d w . . . . .</code>) or if you want to select a large paragraph and indent it several times (<code>{ v } &gt; . .</code>). However, regular commands aren't the only thing you can repeat.</p>
+<h3>Recording and Repeating Macros</h3>
+<p>In vim, to begin recording a macro, you hit <kbd>Escape</kbd>, <kbd>q</kbd>, and then any other letter. The letter you picked is now the name of the macro. So in our vim session above, the new user has accidentally hit <kbd>q</kbd><kbd>w</kbd>, and vim is helpfully telling them that they are recording macro <code>w</code>. When you're done recording a macro, you can hit <kbd>q</kbd> again, and it will save the macro to the letter.</p>
+<p>Applying a macro is <kbd>@</kbd> followed by the letter containing the macro you want to apply. If you want to reapply a macro, you can use <code>@@</code>.</p>
+<h3>Move 13 different lines, three lines down each</h3>
+<p>Here's where it gets awesome. Suppose your boss comes to you and says &quot;Caleb, I want you to move every line that has the word 'help' in it down three lines in this 500 line file.&quot; You, of course, say &quot;No problemo, Boss&quot; and set to work. With vim, it's easy:</p>
+<p><kbd>Escape</kbd> (enter normal mode)</p>
+<p><kbd>/</kbd> <code>help</code> (search for the word help)</p>
+<p><kbd>q</kbd> (record to) <kbd>d</kbd> (d for down!)</p>
+<p><kbd>d</kbd>-<kbd>d</kbd> (<code>d</code>elete line)</p>
+<p><kbd>3</kbd>-<kbd>j</kbd> (3 times do: move down)</p>
+<p><kbd>p</kbd> (<code>p</code>aste)</p>
+<p><kbd>n</kbd> (go to <code>n</code>ext search result)</p>
+<p><kbd>q</kbd> (save current macro)</p>
+<p><kbd>@</kbd><kbd>d</kbd> (<code>@</code>pply macro <code>d</code>)</p>
+<p><kbd>@</kbd><kbd>@</kbd> (<code>@</code>pply <code>@</code>gain)</p>
+<p>And now you're all set for that big promotion. Thanks for reading!</p>
+
+        <span class="tombstone">&#9670;</span>
+    </div>
+</div>
+
+            </section>
+            <footer>
+                <!-- TODO: Add some content to my footer -->
+            </footer>
+        </div>
+    </body>
+</html>
