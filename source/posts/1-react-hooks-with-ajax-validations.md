@@ -10,7 +10,7 @@ I hope I can save someone the hours I spent debugging this. This post will assum
 
 _Narrator (hopefully Wayne June): That's what he thinks._
 
-All you have to do is `useState` for state variables and `useEffect` instead of componentDidMount. I've started using hooks everywhere, for every component I write. They make gigantic classical components into tiny, steamlined, easy-to-read functions.
+All you have to do is `useState` for state variables and `useEffect` instead of componentDidMount. I've started using hooks everywhere, for every component I write. They make gigantic classical components into tiny, streamlined, easy-to-read functions.
 
 # Ajax Validations
 A few weeks ago, I came upon an interesting problem. We have a form that accepts a string which has to be unique in the context of a select box. The combination of the two is a huge amount of data, so getting it all ahead of time would slow down page load. A lot. So we made an ajax validation method. This is where our troubles began.
