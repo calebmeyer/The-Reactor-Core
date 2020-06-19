@@ -426,54 +426,82 @@ kbd {
             </header>
             <hr />
             <section class="main-content">
-                <h2>Posts</h2>
-<ul><li class="post-preview">
-            <h3 class="inline"><a href="/posts/8-ruby-s-less-than-less-than-operator/">8 - Ruby's Less Than Less Than Operator</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-06-18</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/7-vim-macros-for-people-who-barely-know-what-either-of-those-are/">7 - Vim Macros For People Who Barely Know What Either of Those Are</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-06-11</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/6-Monster-Train/">6 - Monster Train</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-06-04</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/5-atom-learning-lessons/">5 - Atom is learning the lessons of all of the above</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-05-05</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/4-coronavirus/">4 - Coronavirus</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-04-26</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/3-independently-developed-games/">3 - Indie Games</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-04-21</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/2-the-friendly-interactive-shell/">2 - The Friendly Interactive Shell</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-04-14</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/1-react-hooks-with-ajax-validations/">1 - React Hooks and Ajax Validations</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-03-30</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/0-starting-a-blog/">0 - Starting a Blog</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-03-29</em>
-        </li>
-    
+                <div class="post">
+    <h2 class="title">8 - Ruby's Less Than Less Than Operator</h2>
+    <small>Published 2020-06-18</small>
+    <div class="content">
+        <p>In the immortal words of <a href="https://www.destroyallsoftware.com/talks/wat">Gary Bernhardt</a>, let's talk about Ruby.</p>
+<h1>Ruby</h1>
+<p>Ruby is a beautiful language. In many ways, Ruby is Rust before Rust was ever conceived of:</p>
+<ul>
+<li>Ruby learned from a lot of the mistakes of languages before it</li>
+<li>Ruby has a vibrant community, with a catchy, inclusive slogan: Matz (creator) is nice and so we are nice (MINASWAN)</li>
+<li>Ruby is very opinionated about its library structure, and includes a utility to make installing dependencies easy (<code>gem</code>)</li>
+<li>Ruby is &quot;designed for programmer happiness&quot;</li>
 </ul>
+<p>However, we can't stretch the metaphor too far. Ruby is dynamic, interpolated, object oriented, and (relatively) slow. It makes up for that last point by being incredibly good for prototyping, much the same as Python. It also takes many of the best parts (regexes in particular) from Perl, which dominated the internet for a time.</p>
+<h2>The <code>&lt;&lt;</code> operator</h2>
+<p>So Ruby's pretty awesome. But like every language, Ruby has warts, and you will see more of them the longer you look. I've been programming professionally (aka getting paid to write software) in Ruby for a little over 5 years now, and today I'd like to put one of my most frequent code review comments into a blog post I can point to.</p>
+<p><strong>Don't use the <code>&lt;&lt;</code> operator in Ruby</strong></p>
+<p>Here's why:</p>
+<pre><code class="language-ruby">some_variable &lt;&lt; 'A string'
+</code></pre>
+<p>What is the type of <code>some_variable</code>, in this line? You could say, &quot;Well, that's an array.&quot; 9 times out of 10, you'd be right. Suppose it is an array. There are valid reasons to stick something onto the end of an array. The most frequent usage I see:</p>
+<pre><code class="language-ruby">arr = []
+iterable.each do |element|
+  arr &lt;&lt; element.foo
+end
+</code></pre>
+<p>is also an anti-pattern (you can collapse it into a single line and run faster and use less memory with map: <code>arr = iterable.map(&amp;:foo)</code>). But even supposing that this is one of those times, <code>&lt;&lt;</code> is a bad idea for a couple of reasons:</p>
+<h3><code>&lt;&lt;</code> is a bad idea because it's hard to pronounce</h3>
+<p>How do you say it in your head? In our above example, you can say &quot;Some variable ...... a string&quot;.</p>
+<p>What do we put there?</p>
+<p>Gets, from C++'s <code>cin.gets &lt;&lt; var</code>?<br>
+Dot push, since <code>&lt;&lt;</code> is an alias (on <code>Array</code>) for <code>.push</code>?<br>
+Dot append, if you come from Python?<br>
+Less than less than, like I put as the title of this blog post?</p>
+<p>Any of these are usable, but they're all compromises.</p>
+<h3><code>&lt;&lt;</code> is a bad idea because it's hard to search</h3>
+<p>If you put <code>ruby less than less than</code> into google, you'll get a few semi-relevant stack overflow posts, followed by a bunch of stuff on comparison:</p>
+<p><img src="../img/search-less-than.png" alt="Ruby search for less than less than"></p>
+<p>It's about the same on Duck Duck Go and slightly worse on Bing (the StackOverflows are down a few results).</p>
+<h3><code>&lt;&lt;</code> is a bad idea because it requires context</h3>
+<p>This is probably the strongest argument against <code>&lt;&lt;</code>. If you ever get into compiler theory, you'll hear about <a href="https://en.wikipedia.org/wiki/Context-free_grammar">context free grammars</a>. If you look at the wikipedia article I linked, you'll see a beautiful formal definition with graphs, fancy symbols, and absolutely no way to understand it at all.</p>
+<p>A context free grammar, in practical terms, is one where you can look at a line of code by itself and understand what it's doing. To be clear, most of the languages we use are not context-free. They are contextual. Even English is contextual. If I tell you, &quot;Oh yeah, he went to the store,&quot; your first question will be &quot;Who?&quot; In this specific example, you need more information to fully understand that sentence.</p>
+<p>In our earlier example:</p>
+<pre><code class="language-ruby">some_variable &lt;&lt; 'A string'
+</code></pre>
+<p>you need more information (more <em>context</em>) to know what the type of some_variable is, and what's actually being done on it. There are at least 4 different possibilities here:</p>
+<ul>
+<li><code>some_variable</code> is an array, and you want to add this element to the end of the array.</li>
+<li><code>some_variable</code> is a string, and you want to concatenate this object to the end of it (yes, you can concat numbers to strings)</li>
+<li><code>some_variable</code> is a <a href="https://ruby-doc.org/stdlib-2.7.1/libdoc/csv/rdoc/CSV.html">CSV</a> and you want to add a row to it.</li>
+<li><code>some_variable</code> is an <a href="https://ruby-doc.org/core-2.7.1/IO.html">IO</a> object, and you want to write to it.</li>
+</ul>
+<p>This is not even including that you can open up an instance of a class to define methods on it with <code>&lt;&lt;</code>, which is possibly the only legitimate use for it, and the thing that comes up in those StackOverflow posts:</p>
+<pre><code class="language-ruby">class &lt;&lt; some_instance
+  def foo
+    puts 'why, though?'
+  end
+end
+
+# some_instance.foo
+# =&gt; why, though?
+# =&gt; nil
+</code></pre>
+<h2>What do we do about it?</h2>
+<p>Use the full names of things!</p>
+<p>If you want to add an element to an array, use <a href="https://ruby-doc.org/core-2.7.1/Array.html#method-i-push">Array#push</a>. Not only is it more readable, <code>pop</code> is cleanly and obviously the opposite behavior. (Note: <code>+</code> on arrays does concatenation, and both arguments must be arrays)</p>
+<p>If you want to concatenate two strings, use <code>+</code> or <code>+=</code>:</p>
+<p><img src="../img/string-concat.png" alt="Use String concatenation with plus"></p>
+<p>If you want to add a row to a CSV, use the appropriately named (though terribly documented) <a href="https://ruby-doc.org/stdlib-2.7.1/libdoc/csv/rdoc/CSV.html#method-i-add_row">CSV#add_row</a>.</p>
+<p>If you want to write to an IO object (such as a file), use <a href="https://ruby-doc.org/core-2.7.1/IO.html#method-i-write">IO#write</a>.</p>
+<h1>Summary</h1>
+<p>This was my first rant about Ruby, though I doubt it will be my last. Tune in next time for mutable strings (fixed in Ruby 3!), <code>require 'English'</code>, and <code>.present?</code>. It will be a blast!</p>
+
+        <span class="tombstone">&#9670;</span>
+    </div>
+</div>
 
             </section>
             <footer>
