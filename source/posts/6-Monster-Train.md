@@ -59,7 +59,7 @@ After a run is over (win or lose), you gain experience based on how well you did
 
 All this information is presented in a nice, easy to read way in your log book, which you can view from the single player menu. It shows what faction combinations you've won with, what covenant level you and your friends have unlocked, and lots more.
 
-![Monster Train - Log Book](../mt-logbook.png)
+![Monster Train - Log Book](../img/mt-logbook.png)
 
 # Summary
 Monster Train is a super fun and addictive rogue-lite deckbuilder. My wife and I have been having a ton of fun playing it. The developer is still very active (I've already noticed several balance tweaks!) and has an active discord server. If you're interested, go [buy it right now on steam](https://store.steampowered.com/app/1102190/Monster_Train/)! If you're still not convinced, I'd encourage you to check out the Canadian streamer NorthernLion, who got early access to the game and is [currently doing a whole series on it](https://www.youtube.com/playlist?list=PL1bauNEiHIgzzZ8mq1qbVMv5HkpytKnnR). Thanks for reading!
