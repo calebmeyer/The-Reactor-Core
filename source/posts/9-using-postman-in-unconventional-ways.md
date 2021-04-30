@@ -1,6 +1,6 @@
 ---
 date: 2021-04-29T21:03:59
-pageTitle: 9 - Using Postman in Unconventional Ways
+pageTitle: 11 - Using Postman in Unconventional Ways
 tags: posts
 ---
 I don't usually like to talk about `$WORK`, but I do like to talk about the tools I use to do it. Today we're going to talk a little bit of both.
