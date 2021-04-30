@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>The Reactor Core</title>
+        <style media="screen">
+            /* note: not actually a sass file, just using that for syntax highlighting */
+
+/*
+ * main green: #d3fc05
+ */
+
+body {
+    background: #101010;
+    color: #c8d1b8;
+    font-family: gitan-latin; Tahoma, Verdana, sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
+    padding: 50px;
+}
+
+/* light color scheme: https://coolors.co/d3fc05-2b303a-f6f7eb-3abecf-7c7c7c */
+body.light {
+    background: #f6f7eb;
+    color: #2B303A;
+}
+
+/* Thanks llogiq for the style inspiration! */
+.wrapper {
+    width: 860px;
+    margin: 0 auto;
+}
+
+@media print, screen and (max-width: 960px) {
+    div.wrapper {
+        width: auto;
+        margin: 0;
+    }
+}
+
+@media print, screen and (max-width: 720px) {
+    body {
+        word-wrap: break-word;
+    }
+
+    pre, code {
+        word-wrap: normal;
+    }
+}
+
+@media print, screen and (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20pt;
+    }
+
+    h2 {
+        font-size: 16pt;
+    }
+
+    h3 {
+        font-size: 14pt;
+    }
+}
+
+@media print {
+    body {
+        padding: 0.4in;
+        font-size: 12pt;
+        color: #444;
+    }
+}
+
+a {
+    transition: text-shadow 0.5s;
+    color: #d6f1fc;
+}
+
+body.light a {
+    color: #3abecf;
+}
+
+a:hover {
+    text-shadow: 0 0 10px #a9cc66;
+}
+
+body.light a:hover {
+    text-shadow: 0 0 10px #3abecf;
+}
+
+pre {
+    background: #1D1F21;
+    border: 1px solid #5C5C5C;
+    border-radius: 5px;
+}
+code {
+    background: #1D1F21;
+    color: #0088FF;
+    font-family: "Source Code Pro", monospace;
+}
+blockquote {
+    background: #1D1F21;
+    border-left: 3px solid #d3fc05;
+}
+
+body.light pre {
+    background: #f6f7eb;
+    color: #2B303A;
+}
+
+body.light blockquote {
+    background: #f6f7eb;
+    color: #2B303A;
+    border-left: 3px solid #95f3ff;
+}
+
+body.light code {
+    background: #f6f7eb;
+    color: #3abecf;
+}
+body.light code.hljs {
+    background: #1d1f21;
+    color: #b6ced8;
+}
+
+blockquote > p {
+    padding-bottom: 0.5em;
+}
+table {
+    margin: 1em auto;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid #5C5C5C;
+}
+tr:hover {
+    background: #1D1F21;
+}
+th {
+    background: #1D1F21;
+}
+body.light tr:hover, body.light th {
+    background: #f6f7eb;
+}
+
+small {
+    /* slightly faded and dimmed version of the body text color */
+    color: #a4a5a2;
+}
+
+body.light small {
+    color: #404752;
+}
+
+header a, h1, h2, h3, h4, h5, h6 {
+    font-family: Tahoma, Verdana, sans-serif;
+}
+
+.site-title-wrapper {
+    width: 400px;
+    display: inline-block;
+}
+.site-title {
+    margin: 0;
+}
+.site-title a, .glow {
+    color: #d3fc05;
+    text-decoration: none;
+    animation-name: radiate;
+    animation-duration: 5s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+}
+
+body.light .site-title a, body.light .glow {
+    color: #3abecf;
+    animation-name: radiate-light;
+}
+
+@keyframes radiate {
+    0% { text-shadow: 0 0 2px #a9cc66; }
+    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05; }
+    100% { text-shadow: 0 0 2px #a9cc66; }
+}
+
+@keyframes radiate-light {
+    0% { text-shadow: 0 0 2px #95f3ff; }
+    50% { text-shadow: 0 0 30px #95f3ff; }
+    100% { text-shadow: 0 0 2px #95f3ff; }
+}
+
+.nav {
+    margin: 10px 0;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.nav a {
+    color: #d3fc05;
+    text-decoration: none;
+}
+
+body.light .nav a {
+    color: #3abecf;
+}
+
+.post .content h1 {
+    color: #d3fc05;
+}
+.post .content h2 {
+    color: #d3fc05;
+}
+.post .content h3 {
+    color: #d3fc05;
+}
+.post .content h4 {
+    color: #d3fc05;
+}
+.post .content h5 {
+    color: #d3fc05;
+}
+.post .content h6 {
+    color: #d3fc05;
+}
+.post .title {
+    color: #d3fc05;
+    margin-bottom: 0;
+}
+.post .content a:hover {
+    color: #d3fc05;
+}
+.social-link:hover {
+    color: #d3fc05;
+}
+.nav-item-title:hover {
+    color: #d3fc05;
+}
+.tag a:hover {
+    color: #d3fc05;
+}
+.post-preview .title a {
+    color: #d3fc05;
+}
+.content-item a:hover {
+    text-decoration: underline;
+    color: #d3fc05;
+}
+.post-list .title {
+    color: #d3fc05;
+}
+
+.tombstone {
+    color: #d3fc05;
+}
+
+body.light .post .content h1 {
+    color: #3abecf;
+}
+body.light .post .content h2 {
+    color: #3abecf;
+}
+body.light .post .content h3 {
+    color: #3abecf;
+}
+body.light .post .content h4 {
+    color: #3abecf;
+}
+body.light .post .content h5 {
+    color: #3abecf;
+}
+body.light .post .content h6 {
+    color: #3abecf;
+}
+body.light .post .title {
+    color: #3abecf;
+    margin-bottom: 0;
+}
+body.light .post .content a:hover {
+    color: #3abecf;
+}
+body.light .social-link:hover {
+    color: #3abecf;
+}
+body.light .nav-item-title:hover {
+    color: #3abecf;
+}
+body.light .tag a:hover {
+    color: #3abecf;
+}
+body.light .post-preview .title a {
+    color: #3abecf;
+}
+body.light .content-item a:hover {
+    text-decoration: underline;
+    color: #3abecf;
+}
+body.light .post-list .title {
+    color: #3abecf;
+}
+
+body.light .tombstone {
+    color: #3abecf;
+}
+
+.inline {
+    display: inline;
+}
+
+blockquote > p {
+    margin-left: 10px;
+}
+
+.language-shell .hljs-meta {
+    user-select: none; /* don't allow users to select $ in shell */
+}
+
+img:not([width]) { /* set images to take up the full width, unless I specify a width on them */
+    width: 100%;
+}
+
+kbd {
+	background-color: #444;
+	color: #c8d1b8;
+	padding: 4px 10px;
+	border-radius: 4px;
+	border: 3px solid #aaa;
+}
+
+            .hljs-comment,
+.hljs-quote
+{
+  color: #456b7c; /* darker version of background */
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion
+{
+  color: #5dcdfd; /* faded light blue */
+}
+
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link,
+.hljs-subst
+{
+  color: #35ddff; /* bright aqua */
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition
+{
+  color: #13CE00; /* verdant green */
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-attribute
+{
+  color: #96FF00; /* yellow green */
+}
+
+.hljs-keyword,
+.hljs-selector-tag
+{
+  color: #1ea8fc; /* cerulean */
+}
+
+.hljs
+{
+  display: block;
+  overflow-x: auto;
+  background: #19272d;
+  color: #b6ced8;
+  padding: 0.5em;
+  font-family: "Source Code Pro", "Consolas", monospace;
+}
+
+.hljs-emphasis
+{
+  font-style: italic;
+}
+
+.hljs-strong
+{
+  font-weight: bold;
+}
+
+        </style>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap">
+        <link rel="stylesheet" href="https://use.typekit.net/uvh1qwh.css">
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body class="dark">
+        <div class="wrapper">
+            <header>
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a href="/">The Reactor Core</a>
+                    </h1>
+                    <small>Where the engineers hang out</small>
+                </div>
+                <h2 class="nav">
+                    <a href="/about">About</a>
+                </h2>
+            </header>
+            <hr />
+            <section class="main-content">
+                <div class="post">
+    <h2 class="title">11 - Using Postman in Unconventional Ways</h2>
+    <small>Published 2021-04-29</small>
+    <div class="content">
+        <p>I don't usually like to talk about <code>$WORK</code>, but I do like to talk about the tools I use to do it. Today we're going to talk a little bit of both.</p>
+<h1>Postman</h1>
+<p>Postman <a href="https://github.com/postmanlabs/postman-chrome-extension-legacy">was a chrome extension</a> that turned out to be so useful <a href="https://www.postman.com/">it got pulled out into a whole application</a>. It's still electron and react under the hood, though the app itself is no longer open source (at least as far as I could find).</p>
+<p>Postman is maybe best described as a GUI version of <a href="https://curl.se/">cURL</a>. It lets you make HTTP requests of all types (browser address bars only let you make GET requests, mostly), including GET/POST/PUT/PATCH/DELETE and many more. If you want to learn the basics, <a href="https://learning.postman.com/docs/getting-started/introduction/">the docs</a> are good. If you haven't yet, I highly recommend you check them out.</p>
+<h2>Postman at Work</h2>
+<p>My usual work is on a big web application that is powered by a ton of micro-services. One of the joys of working at a big corporation is you get to somewhat define the standards. If you look at Facebook, for example, the internet wasn't doing what they wanted, so they built React. One of the things we built was an extension to Oauth.</p>
+<h2>OAuth 1 is a pain to work with.</h2>
+<p><img src="../img/oauth.png" alt="screenshot of postman"></p>
+<p>10 different fields required just to make an authorized request to somewhere, 11 if you count the signature method. It's madness. Even when we coded up service clients in Ruby, Python, and Java, we still needed to know at least 3 pieces of information before we could hand over our requests to a library: the key, secret, and access token url.</p>
+<p>Fortunately, these are the kinds of things you can set up once and <em>mostly</em> forget about.</p>
+<h2>Making OAuth 1 Tolerable with Postman</h2>
+<p>Okay, so first things first, we need to understand how oauth 1 works before we can automate anything. I have found that it's always worth investing a little extra time to find out how things work before you start throwing code at them. For OAuth 1, we have to make a request and get information from the response which we will use in every future request.</p>
+<p>The request is to that access token url I talked about earlier. You send it your key and secret. This is where we come to our first cool bit of postman. You can put `` basically everywhere in the ui, including in other variables. You'll probably notice in that screenshot above that I have a consumer_key and consumer_secret defined as variables. You can make these global, but if you'll be hitting a development, sandbox, staging, or other type of non-production environment, then it will be much better to use <a href="https://learning.postman.com/docs/sending-requests/managing-environments/">postman environments</a>. I use these extensively so I can keep my requests the same, and just the environment specific things flex.</p>
+<p>Once you make an initial oauth authorization request, you'll get back a long string that looks suspiciously like a query string:</p>
+<pre><code>oauth_token=n33mdfL8TU5VP44pqxJffntL&amp;amp;oauth_token_secret=KRDKxqIpE7yratkW3LONQxgGDctaB4ieg73UKVyitSwp0GMY
+</code></pre>
+<blockquote>
+<p>I'll quickly note here that there may be more things on the end, but they're not important for us.</p>
+</blockquote>
+<p>Great! So we have an oauth_token and oauth_token_secret. We can just plug these in and be off to the races, right?</p>
+<p><img src="../img/oauth2.png" alt="pretty much, yeah"></p>
+<p>Well, yes, you can do this, and if you're happy with this, great! But remember, those tokens don't last forever. Most of mine have lasted somewhere between 15 minutes and an hour. Do you really want to keep having to change these manually every few requests?</p>
+<h1>Automate the Boring Stuff</h1>
+<p>Assuming the answer is no, you're not happy with the status quo, it's time to look at the <a href="https://learning.postman.com/docs/writing-scripts/intro-to-scripts/">Postman scripting API</a>. As it turns out, you can do almost anything you could click or type programmatically in Postman. Want to send a request when this one finishes? You can do that! Want to repeat a request over and over, changing just one thing? (perhaps an id?) You can do that too. But what's important for us here is that we can read the response body, and we can set environment variables.</p>
+<blockquote>
+<p>Before we start, I'll mention that the Pre-Request Script runs before the request is sent. It lets you mess around with the URL, parameters, request headers, and request body. Instead of having a Post-Response Script (for the symmetry), Postman calls it &quot;Tests&quot;.</p>
+</blockquote>
+<p>With the power of regex, we can extract exactly the bits we want into variables:</p>
+<pre><code class="language-javascript">// find the exact string oauth_token=, followed by anything,
+// followed by &amp;oauth_token_secret=, and finally anything that's not an ampersand (&amp;)
+var regex = /oauth_token=(.*)&amp;oauth_token_secret=([^&amp;]*)/g;
+
+// change that &amp;amp; into a proper ampersand
+var decoded = decodeURIComponent(responseBody);
+
+// run the regex against the URI decoded response body
+var match = regex.exec(decoded);
+
+// the parens in our regex make what are called capturing groups,
+// which we extract to variables here
+var accessToken = match[1];
+var tokenSecret = match[2];
+</code></pre>
+<p>And now that we have these as variables, it would be really nice if we could auto-populate them into all our requests. Two things working together allow us to do this. First, the rest of the &quot;test&quot; script:</p>
+<pre><code class="language-javascript">pm.environment.set(&quot;access_token&quot;, accessToken);
+pm.environment.set(&quot;access_token_secret&quot;, tokenSecret);
+</code></pre>
+<p>This sets the current environment to have those two variables. It will create them if they don't exist, or overwrite them if they do.</p>
+<p>The second part is we need to apply this to all our requests. Postman lets you <a href="https://learning.postman.com/docs/sending-requests/intro-to-collections/">group requests into collections</a>, and you can set just about everything you'd want to set for an individual request on the collection itself. Here, we want to set the Authorization:
+<img src="../img/oauth3.png" alt="collection authorization"></p>
+<p>And that's it! You have a request (I call mine <code>Populate Oauth (Run this first!)</code>) which populates your oauth token and secret, and every request in the collection inherits that auth!</p>
+<h1>Where to Go From Here</h1>
+<p>From here, the sky is truly the limit. If you wanted to spend a lot more time than I have, you could have all your requests watch for 401 (Unauthorized) status, and run your populate oauth request if one is detected, then re-run your original request. Be careful of loops if you do that. You could build this same request flow in <a href="https://learning.postman.com/docs/running-collections/using-newman-cli/command-line-integration-with-newman/">Newman, the Postman CLI</a>. You could probably do something I haven't thought of yet. Just beware of rabbit holes.</p>
+<p><img src="https://imgs.xkcd.com/comics/is_it_worth_the_time_2x.png" alt="xkcd 1205"></p>
+
+        <span class="tombstone">&#9670;</span>
+    </div>
+</div>
+
+            </section>
+            <footer>
+                <!-- TODO: Add some content to my footer -->
+            </footer>
+        </div>
+    </body>
+</html>
