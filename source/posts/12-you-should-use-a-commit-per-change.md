@@ -95,5 +95,10 @@ My workflow looks something like this:
 
 This takes me all of 15-30 seconds, and doesn't break my flow. I can go right on to the next change. If I find out that we didn't want that change, I can revert it easily.
 
-# Summary
+## Update 2023
+Atom has been sunset. It was a sad day for everyone who has ever worked with/on it, especially because no other editor has the same combination of incredibly polished UI (JetBrains, to a lesser extent Visual Studio and Code) and incredibly easy to extend (Emacs, Vim, NeoVim). VS Code comes the closest, but importantly to this post, the git window is not very keyboard accessible. If you use a keybinding like `<leader> g c` to run `workbench.view.scm`, the focus doesn't always (or even often) land on the commit message input. And if it's on anything else, Tab and Shift-Tab skip past the commit message input.
+
+I don't have a good answer for you. If you want keyboard based navigation, try spacemacs or astronvim. If you want polished UI, you have to give up a good keyboard workflow for it, at least for now.
+
+## Summary
 I hope I've convinced you. Once you get your commit workflow to where it doesn't break your flow, you'll find yourself able to make much larger changes without fear, able to easily undo or add in code, able to estimate *like a boss*, and writing beautiful commit messages that years later you will thank you for.
