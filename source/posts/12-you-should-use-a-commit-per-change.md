@@ -4,7 +4,7 @@ pageTitle: 12 - You should use a commit per change
 tags: posts
 ---
 
-Every so often, I hear a (usually newer) developer extolling the virtues of a single commit PR. And while I agree that PRs should be merged into a single commit on the main branch, you absolutely should not be rolling up all your myriad changes into a single commit until then. Here's why.
+Every so often, I hear a (usually newer) developer extolling the virtues of a single commit pull request (PR). And while I agree that PRs should be merged into a single commit on the main branch, you absolutely should not be rolling up all your myriad changes into a single commit until then. Here's why.
 
 ## Sometimes, we don't get it perfect the first time
 If you are not committing early and often, you will find yourself in a bad state eventually. Specifically, you will have made so many changes that you don't know which one broke the code. When that happens, you have two bad options. Either you can do a `git reset --hard` and start over from before all the changes, or you slog through and likely make it worse before it gets better. Don't get stuck in this trap!
