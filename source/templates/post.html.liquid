@@ -4,8 +4,8 @@ layout: base.html.liquid
 <div class="post">
     <h1 class="title">{{ pageTitle }}</h1>
     <small>Published {{ date | date: "%Y-%m-%d" }}</small>
-    <main class="content">
+    <section class="content">
         {{ content }}
         <span class="tombstone">&#9670;</span>
-    </main>
+    </section>
 </div>
