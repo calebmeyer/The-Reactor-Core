@@ -431,12 +431,12 @@ kbd {
                 </h2>
             </header>
             <hr />
-            <section class="main-content">
+            <main>
                 <div class="post">
-    <h2 class="title">12 - You should use a commit per change</h2>
+    <h1 class="title">12 - You should use a commit per change</h1>
     <small>Published 2021-05-20</small>
-    <div class="content">
-        <p>Every so often, I hear a (usually newer) developer extolling the virtues of a single commit PR. And while I agree that PRs should be merged into a single commit on the main branch, you absolutely should not be rolling up all your myriad changes into a single commit until then. Here's why.</p>
+    <section class="content">
+        <p>Every so often, I hear a (usually newer) developer extolling the virtues of a single commit pull request (PR). And while I agree that PRs should be merged into a single commit on the main branch, you absolutely should not be rolling up all your myriad changes into a single commit until then. Here's why.</p>
 <h2>Sometimes, we don't get it perfect the first time</h2>
 <p>If you are not committing early and often, you will find yourself in a bad state eventually. Specifically, you will have made so many changes that you don't know which one broke the code. When that happens, you have two bad options. Either you can do a <code>git reset --hard</code> and start over from before all the changes, or you slog through and likely make it worse before it gets better. Don't get stuck in this trap!</p>
 <p>Instead, if you commit early and often, you can have a beautiful git history that tells you exactly what changed in each commit. Want to undo a specific commit that happened 5 commits back? <code>git log</code>, find the commit hash, and then <code>git revert abcd123</code>. That will give you a nice undo commit that exactly undoes whatever abcd123 did.</p>
@@ -515,14 +515,17 @@ kbd {
 <li>Paste the commit link into a comment on my PR</li>
 </ul>
 <p>This takes me all of 15-30 seconds, and doesn't break my flow. I can go right on to the next change. If I find out that we didn't want that change, I can revert it easily.</p>
-<h1>Summary</h1>
+<h2>Update 2023</h2>
+<p>Atom has been sunset. It was a sad day for everyone who has ever worked with/on it, especially because no other editor has the same combination of incredibly polished UI (JetBrains, to a lesser extent Visual Studio and Code) and incredibly easy to extend (Emacs, Vim, NeoVim). VS Code comes the closest, but importantly to this post, the git window is not very keyboard accessible. If you use a keybinding like <code>&lt;leader&gt; g c</code> to run <code>workbench.view.scm</code>, the focus doesn't always (or even often) land on the commit message input. And if it's on anything else, Tab and Shift-Tab skip past the commit message input.</p>
+<p>I don't have a good answer for you. If you want keyboard based navigation, try spacemacs or astronvim. If you want polished UI, you have to give up a good keyboard workflow for it, at least for now.</p>
+<h2>Summary</h2>
 <p>I hope I've convinced you. Once you get your commit workflow to where it doesn't break your flow, you'll find yourself able to make much larger changes without fear, able to easily undo or add in code, able to estimate <em>like a boss</em>, and writing beautiful commit messages that years later you will thank you for.</p>
 
         <span class="tombstone">&#9670;</span>
-    </div>
+    </section>
 </div>
 
-            </section>
+            </main>
             <footer>
                 <!-- TODO: Add some content to my footer -->
             </footer>

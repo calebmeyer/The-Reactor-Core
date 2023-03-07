@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>The Reactor Core</title>
+        <style media="screen">
+            /* note: not actually a sass file, just using that for syntax highlighting */
+
+/*
+ * main green: #d3fc05
+ */
+
+body {
+    background: #101010;
+    color: #c8d1b8;
+    font-family: gitan-latin; Tahoma, Verdana, sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
+    padding: 50px;
+}
+
+/* light color scheme: https://coolors.co/d3fc05-2b303a-f6f7eb-3abecf-7c7c7c */
+body.light {
+    background: #f6f7eb;
+    color: #2B303A;
+}
+
+/* Thanks llogiq for the style inspiration! */
+.wrapper {
+    width: 860px;
+    margin: 0 auto;
+}
+
+@media print, screen and (max-width: 960px) {
+    div.wrapper {
+        width: auto;
+        margin: 0;
+    }
+}
+
+@media print, screen and (max-width: 720px) {
+    body {
+        word-wrap: break-word;
+    }
+
+    pre, code {
+        word-wrap: normal;
+    }
+}
+
+@media print, screen and (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20pt;
+    }
+
+    h2 {
+        font-size: 16pt;
+    }
+
+    h3 {
+        font-size: 14pt;
+    }
+}
+
+@media print {
+    body {
+        padding: 0.4in;
+        font-size: 12pt;
+        color: #444;
+    }
+}
+
+a {
+    transition: text-shadow 0.5s;
+    color: #d6f1fc;
+}
+
+body.light a {
+    color: #3abecf;
+}
+
+a:hover {
+    text-shadow: 0 0 10px #a9cc66;
+}
+
+body.light a:hover {
+    text-shadow: 0 0 10px #3abecf;
+}
+
+pre {
+    background: #1D1F21;
+    border: 1px solid #5C5C5C;
+    border-radius: 5px;
+}
+code {
+    background: #1D1F21;
+    color: #0088FF;
+    font-family: "Source Code Pro", monospace;
+}
+blockquote {
+    background: #1D1F21;
+    border-left: 3px solid #d3fc05;
+}
+
+body.light pre {
+    background: #f6f7eb;
+    color: #2B303A;
+}
+
+body.light blockquote {
+    background: #f6f7eb;
+    color: #2B303A;
+    border-left: 3px solid #95f3ff;
+}
+
+body.light code {
+    background: #f6f7eb;
+    color: #3abecf;
+}
+body.light code.hljs {
+    background: #1d1f21;
+    color: #b6ced8;
+}
+
+blockquote > p {
+    padding-bottom: 0.5em;
+}
+table {
+    margin: 1em auto;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid #5C5C5C;
+}
+tr:hover {
+    background: #1D1F21;
+}
+th {
+    background: #1D1F21;
+}
+body.light tr:hover, body.light th {
+    background: #f6f7eb;
+}
+
+small {
+    /* slightly faded and dimmed version of the body text color */
+    color: #a4a5a2;
+}
+
+body.light small {
+    color: #404752;
+}
+
+header a, h1, h2, h3, h4, h5, h6 {
+    font-family: Tahoma, Verdana, sans-serif;
+}
+
+.site-title-wrapper {
+    width: 400px;
+    display: inline-block;
+}
+.site-title {
+    margin: 0;
+}
+.site-title a, .glow {
+    color: #d3fc05;
+    text-decoration: none;
+    animation-name: radiate;
+    animation-duration: 5s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+}
+
+body.light .site-title a, body.light .glow {
+    color: #3abecf;
+    animation-name: radiate-light;
+}
+
+@keyframes radiate {
+    0% { text-shadow: 0 0 2px #a9cc66; }
+    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05; }
+    100% { text-shadow: 0 0 2px #a9cc66; }
+}
+
+@keyframes radiate-light {
+    0% { text-shadow: 0 0 2px #95f3ff; }
+    50% { text-shadow: 0 0 30px #95f3ff; }
+    100% { text-shadow: 0 0 2px #95f3ff; }
+}
+
+.nav {
+    margin: 10px 0;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.nav a {
+    color: #d3fc05;
+    text-decoration: none;
+}
+
+body.light .nav a {
+    color: #3abecf;
+}
+
+.post .content h1 {
+    color: #d3fc05;
+}
+.post .content h2 {
+    color: #d3fc05;
+}
+.post .content h3 {
+    color: #d3fc05;
+}
+.post .content h4 {
+    color: #d3fc05;
+}
+.post .content h5 {
+    color: #d3fc05;
+}
+.post .content h6 {
+    color: #d3fc05;
+}
+.post .title {
+    color: #d3fc05;
+    margin-bottom: 0;
+}
+.post .content a:hover {
+    color: #d3fc05;
+}
+.social-link:hover {
+    color: #d3fc05;
+}
+.nav-item-title:hover {
+    color: #d3fc05;
+}
+.tag a:hover {
+    color: #d3fc05;
+}
+.post-preview .title a {
+    color: #d3fc05;
+}
+.content-item a:hover {
+    text-decoration: underline;
+    color: #d3fc05;
+}
+.post-list .title {
+    color: #d3fc05;
+}
+
+.tombstone {
+    color: #d3fc05;
+}
+
+body.light .post .content h1 {
+    color: #3abecf;
+}
+body.light .post .content h2 {
+    color: #3abecf;
+}
+body.light .post .content h3 {
+    color: #3abecf;
+}
+body.light .post .content h4 {
+    color: #3abecf;
+}
+body.light .post .content h5 {
+    color: #3abecf;
+}
+body.light .post .content h6 {
+    color: #3abecf;
+}
+body.light .post .title {
+    color: #3abecf;
+    margin-bottom: 0;
+}
+body.light .post .content a:hover {
+    color: #3abecf;
+}
+body.light .social-link:hover {
+    color: #3abecf;
+}
+body.light .nav-item-title:hover {
+    color: #3abecf;
+}
+body.light .tag a:hover {
+    color: #3abecf;
+}
+body.light .post-preview .title a {
+    color: #3abecf;
+}
+body.light .content-item a:hover {
+    text-decoration: underline;
+    color: #3abecf;
+}
+body.light .post-list .title {
+    color: #3abecf;
+}
+
+body.light .tombstone {
+    color: #3abecf;
+}
+
+.inline {
+    display: inline;
+}
+
+blockquote > p {
+    margin-left: 10px;
+}
+
+.language-shell .hljs-meta {
+    user-select: none; /* don't allow users to select $ in shell */
+}
+
+img:not([width]) { /* set images to take up the full width, unless I specify a width on them */
+    width: 100%;
+}
+
+kbd {
+    background-color: #444;
+    color: #c8d1b8;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 3px solid #aaa;
+}
+
+.follow-up {
+    background-color: #242424;
+    color: #d2f495;
+    padding: 0.5em;
+}
+
+            .hljs-comment,
+.hljs-quote
+{
+  color: #456b7c; /* darker version of background */
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion
+{
+  color: #5dcdfd; /* faded light blue */
+}
+
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link,
+.hljs-subst
+{
+  color: #35ddff; /* bright aqua */
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition
+{
+  color: #13CE00; /* verdant green */
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-attribute
+{
+  color: #96FF00; /* yellow green */
+}
+
+.hljs-keyword,
+.hljs-selector-tag
+{
+  color: #1ea8fc; /* cerulean */
+}
+
+.hljs
+{
+  display: block;
+  overflow-x: auto;
+  background: #19272d;
+  color: #b6ced8;
+  padding: 0.5em;
+  font-family: "Source Code Pro", "Consolas", monospace;
+}
+
+.hljs-emphasis
+{
+  font-style: italic;
+}
+
+.hljs-strong
+{
+  font-weight: bold;
+}
+
+        </style>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap">
+        <link rel="stylesheet" href="https://use.typekit.net/uvh1qwh.css">
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body class="dark">
+        <div class="wrapper">
+            <header>
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a href="/">The Reactor Core</a>
+                    </h1>
+                    <small>Where the engineers hang out</small>
+                </div>
+                <h2 class="nav">
+                    <a href="/about">About</a>
+                </h2>
+            </header>
+            <hr />
+            <main>
+                <div class="post">
+    <h1 class="title">13 - Setting up Vagrant with Fish and Rust</h1>
+    <small>Published 2023-03-06</small>
+    <section class="content">
+        <p>Today I decided I wanted to learn some Vagrant, following Amos' post about <a href="https://fasterthanli.me/series/building-a-rust-service-with-nix/part-1">Setting up a local Ubuntu Server VM</a> on fasterthanlime. Definitely go read that first if you haven't. Cool bear's final hot tip was that Vagrant does all the things automatically instead of manually.</p>
+<p>So I fired up my windows desktop and dug in.</p>
+<h2>Differences</h2>
+<p>I took a different path because I like taking different paths. I chose not to use Ubuntu because I'm a big fan of Fedora. While researching for my last devcon talk (<a href="https://github.com/calebmeyer/linux-slides">slides here</a>), I found out that Linus Torvalds himself uses Fedora. If it's good enough for the creator of Linux, it's good enough for me.</p>
+<p>I also wanted to set up <a href="/posts/2-the-friendly-interactive-shell/">the Friendly Interactive Shell</a> and the rust programming language, both of which proved challenging in their own right.</p>
+<h2>Getting Vagrant and VirtualBox</h2>
+<p>Getting vagrant was as easy as <code>scoop install vagrant</code>. I'm sure your package manager of choice has it too. Getting virtualbox required going to the website. Scoop didn't have it that I could find. But it was a quick install, and even has a dark mode now!</p>
+<h2>Getting a Fedora VM set up</h2>
+<p>From 0 to VM was also pretty easy. Searching <code>fedora</code> on <a href="https://app.vagrantup.com/boxes/search">the boxes page</a> gave me some very old versions, so I changed my search to <code>fedora 37</code> and landed on <a href="https://app.vagrantup.com/generic/boxes/fedora37">generic/fedora37</a>.</p>
+<p>With that in hand, I made a new folder in my side projects called vagrant and ran <code>vagrant init</code>. That created a Vagrantfile, which is a ruby file that configures how Vagrant works. I left everything default except changing <code>config.vm.box</code> to the fedora image I found. Then I ran <code>vagrant up</code> and it created the VM. Super easy.</p>
+<h2>Minor SSH issues</h2>
+<p>The output of <code>vagrant up</code> suggested that the VM had an SSH server running on an internal port 22 mapped to my host's port 2222 for 127.0.0.1. So I ran the obvious SSH command <code>ssh vagrant@127.0.0.1:2222</code> and it didn't work. I tried again from a WSL bash, in case it was something up with windows' version. Nope. Neither worked. I went back and read the docs, and it turns out you have to do <code>vagrant ssh</code> instead. A bit magical, but the magic works, so I can't complain.</p>
+<h2>Provisioning fish</h2>
+<p>Fish is a difficult shell to get, unfortunately. Many distros don't include it in the available packages in their package manager. None that I've ever seen install it by default. Fortunately, Fedora at least has it available in <code>dnf</code>, so that's an easy win. At the bottom of the Vagrantfile is a commented section with <code>config.vm.provision</code>. If you uncomment it, it has an apt shell script inline. Changing the <code>apt</code> to <code>dnf</code> lets us update and install things. I have it installing fish:</p>
+<pre><code class="language-ruby">  config.vm.provision &quot;shell&quot;, inline: &lt;&lt;-SHELL
+    dnf update -y
+    dnf install -y fish
+  SHELL
+</code></pre>
+<p>To run this script, you type <code>vagrant provision</code>, so I did. And the output looked good. But fish was not the default shell. <a href="https://fishshell.com/docs/3.0/tutorial.html#tut_switching_to_fish">The fish docs</a> suggest using these two commands, so I tried them:</p>
+<pre><code class="language-sh">echo /usr/local/bin/fish | sudo tee -a /etc/shells
+chsh -s /usr/local/bin/fish
+</code></pre>
+<p>The problem is... both are wrong. <code>dnf</code> installs fish to <code>/usr/bin/fish</code>, not <code>/usr/local/bin/fish</code>. And <code>chsh</code> does not exist on this system. I went down quite a rabbit hole trying to figure out why. Supposedly it's provided by the linux-util package, which was already installed by default. But <code>which chsh</code> doesn't turn up any binary for it. Eventually I learned that you can do the same thing (a bit more verbosely) like this: <code>usermod --shell /usr/bin/fish vagrant</code>. The <code>vagrant</code> user is important here, because the provisioning script is run as root, but you ssh as the vagrant user. With that we get a fish prompt after <code>vagrant ssh</code>. Success!</p>
+<p>We also want to ensure that we don't keep appending to /etc/shells on every provision, so I added one of my favorite tricks: check or do. Here we check if fish is already in /etc/shells or add it if not. That makes our provision command now:</p>
+<pre><code class="language-ruby">  config.vm.provision &quot;shell&quot;, inline: &lt;&lt;-SHELL
+    dnf update -y
+    dnf install -y fish
+
+    grep fish /etc/shells || echo /usr/bin/fish | sudo tee -a /etc/shells
+    usermod --shell /usr/bin/fish vagrant
+  SHELL
+</code></pre>
+<h2>Provisioning Rust</h2>
+<p>This was also tricky, though for different reasons. <code>dnf</code> has rust among its packages, but I've had bad luck managing programming languages with package managers. You often end up needing more than one version, like when <code>node-gyp</code> wants python 2, or you're upgrading major/minor versions.</p>
+<p>Fortunately rust provides <a href="https://rustup.rs/">rustup</a>, which handles all of this for us... or does it? I added the command to my provisioning script... and it bombed out because it was run non-interactively. Fortunately it also gave out a link to <a href="https://rust-lang.github.io/rustup/installation/other.html">the book</a> which helped me get the command right:</p>
+<pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+</code></pre>
+<p>With that in place, I just needed to get it into the fish path. Rustup already inserts itself for bash/zsh by default, but doesn't do so for fish. Fortunately, we don't need any crazy path manipulation scripts, since fish includes a handy one: <a href="https://fishshell.com/docs/current/cmds/fish_add_path.html">fish_add_path</a>. This command does what you mean in config.fish or interactively. Since I want this to stick for future provisioned shells, let's add it to config.fish:</p>
+<pre><code class="language-sh">echo &quot;fish_add_path ~/.cargo/bin&quot; &gt;&gt; /home/vagrant/.config/fish/config.fish
+</code></pre>
+<p>That's a pretty long command, and it gets even longer when you add the check to make sure we don't do this every time:</p>
+<pre><code class="language-sh">grep -q &quot;fish_add_path ~/.cargo/bin&quot; /home/vagrant/.config/fish/config.fish || echo &quot;fish_add_path ~/.cargo/bin&quot; &gt;&gt; /home/vagrant/.config/fish/config.fish
+</code></pre>
+<p>That's well over my usual hard limit of 120 characters per line, so let's take advantage of the fact we're in Ruby and interpolate that long path. This gets us to our final provisioning script:</p>
+<pre><code class="language-ruby">  fish_config_file = '/home/vagrant/.config/fish/config.fish'
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  config.vm.provision &quot;shell&quot;, inline: &lt;&lt;-SHELL
+    dnf update -y
+    dnf install -y fish
+
+    grep fish /etc/shells || echo /usr/bin/fish | sudo tee -a /etc/shells
+    usermod --shell /usr/bin/fish vagrant
+
+    which cargo || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    grep -q &quot;fish_add_path ~/.cargo/bin&quot; #{fish_config_file} || echo &quot;fish_add_path ~/.cargo/bin&quot; &gt;&gt; #{fish_config_file}
+  SHELL
+</code></pre>
+<p>VS Code highlights this poorly because it's trying too hard. It treats the <code>SHELL</code> heredoc as shell script and thus it thinks that the <code>#</code> starts a comment. Oh well. You can't win them all.</p>
+<h2>Conclusion</h2>
+<p>It was a bit trickier than I'd hoped to get everything set up just the way I wanted. If I'd wanted to mix tools, I could have written a dockerfile to do all this much more quickly (or it's possible someone else already has). But I'm happy with my fish and rust setup, and I look forward to seeing how well Vagrant works for some real development in the future.</p>
+
+        <span class="tombstone">&#9670;</span>
+    </section>
+</div>
+
+            </main>
+            <footer>
+                <!-- TODO: Add some content to my footer -->
+            </footer>
+        </div>
+    </body>
+</html>
