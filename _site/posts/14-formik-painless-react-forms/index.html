@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>The Reactor Core</title>
+        <style media="screen">
+            /* note: not actually a sass file, just using that for syntax highlighting */
+
+/*
+ * main green: #d3fc05
+ */
+
+body {
+    background: #101010;
+    color: #c8d1b8;
+    font-family: gitan-latin; Tahoma, Verdana, sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
+    padding: 50px;
+}
+
+/* light color scheme: https://coolors.co/d3fc05-2b303a-f6f7eb-3abecf-7c7c7c */
+body.light {
+    background: #f6f7eb;
+    color: #2B303A;
+}
+
+/* Thanks llogiq for the style inspiration! */
+.wrapper {
+    width: 860px;
+    margin: 0 auto;
+}
+
+@media print, screen and (max-width: 960px) {
+    div.wrapper {
+        width: auto;
+        margin: 0;
+    }
+}
+
+@media print, screen and (max-width: 720px) {
+    body {
+        word-wrap: break-word;
+    }
+
+    pre, code {
+        word-wrap: normal;
+    }
+}
+
+@media print, screen and (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20pt;
+    }
+
+    h2 {
+        font-size: 16pt;
+    }
+
+    h3 {
+        font-size: 14pt;
+    }
+}
+
+@media print {
+    body {
+        padding: 0.4in;
+        font-size: 12pt;
+        color: #444;
+    }
+}
+
+a {
+    transition: text-shadow 0.5s;
+    color: #d6f1fc;
+}
+
+body.light a {
+    color: #3abecf;
+}
+
+a:hover {
+    text-shadow: 0 0 10px #a9cc66;
+}
+
+body.light a:hover {
+    text-shadow: 0 0 10px #3abecf;
+}
+
+pre {
+    background: #1D1F21;
+    border: 1px solid #5C5C5C;
+    border-radius: 5px;
+}
+code {
+    background: #1D1F21;
+    color: #0088FF;
+    font-family: "Source Code Pro", monospace;
+}
+blockquote {
+    background: #1D1F21;
+    border-left: 3px solid #d3fc05;
+}
+
+body.light pre {
+    background: #f6f7eb;
+    color: #2B303A;
+}
+
+body.light blockquote {
+    background: #f6f7eb;
+    color: #2B303A;
+    border-left: 3px solid #95f3ff;
+}
+
+body.light code {
+    background: #f6f7eb;
+    color: #3abecf;
+}
+body.light code.hljs {
+    background: #1d1f21;
+    color: #b6ced8;
+}
+
+blockquote > p {
+    padding-bottom: 0.5em;
+}
+table {
+    margin: 1em auto;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid #5C5C5C;
+}
+tr:hover {
+    background: #1D1F21;
+}
+th {
+    background: #1D1F21;
+}
+body.light tr:hover, body.light th {
+    background: #f6f7eb;
+}
+
+small {
+    /* slightly faded and dimmed version of the body text color */
+    color: #a4a5a2;
+}
+
+body.light small {
+    color: #404752;
+}
+
+header a, h1, h2, h3, h4, h5, h6 {
+    font-family: Tahoma, Verdana, sans-serif;
+}
+
+.site-title-wrapper {
+    width: 400px;
+    display: inline-block;
+}
+.site-title {
+    margin: 0;
+}
+.site-title a, .glow {
+    color: #d3fc05;
+    text-decoration: none;
+    animation-name: radiate;
+    animation-duration: 5s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+}
+
+body.light .site-title a, body.light .glow {
+    color: #3abecf;
+    animation-name: radiate-light;
+}
+
+@keyframes radiate {
+    0% { text-shadow: 0 0 2px #a9cc66; }
+    50% { text-shadow: 0 0 30px #a9cc66; color: #f0fc05; }
+    100% { text-shadow: 0 0 2px #a9cc66; }
+}
+
+@keyframes radiate-light {
+    0% { text-shadow: 0 0 2px #95f3ff; }
+    50% { text-shadow: 0 0 30px #95f3ff; }
+    100% { text-shadow: 0 0 2px #95f3ff; }
+}
+
+.nav {
+    margin: 10px 0;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.nav a {
+    color: #d3fc05;
+    text-decoration: none;
+}
+
+body.light .nav a {
+    color: #3abecf;
+}
+
+.post .content h1 {
+    color: #d3fc05;
+}
+.post .content h2 {
+    color: #d3fc05;
+}
+.post .content h3 {
+    color: #d3fc05;
+}
+.post .content h4 {
+    color: #d3fc05;
+}
+.post .content h5 {
+    color: #d3fc05;
+}
+.post .content h6 {
+    color: #d3fc05;
+}
+.post .title {
+    color: #d3fc05;
+    margin-bottom: 0;
+}
+.post .content a:hover {
+    color: #d3fc05;
+}
+.social-link:hover {
+    color: #d3fc05;
+}
+.nav-item-title:hover {
+    color: #d3fc05;
+}
+.tag a:hover {
+    color: #d3fc05;
+}
+.post-preview .title a {
+    color: #d3fc05;
+}
+.content-item a:hover {
+    text-decoration: underline;
+    color: #d3fc05;
+}
+.post-list .title {
+    color: #d3fc05;
+}
+
+.tombstone {
+    color: #d3fc05;
+}
+
+body.light .post .content h1 {
+    color: #3abecf;
+}
+body.light .post .content h2 {
+    color: #3abecf;
+}
+body.light .post .content h3 {
+    color: #3abecf;
+}
+body.light .post .content h4 {
+    color: #3abecf;
+}
+body.light .post .content h5 {
+    color: #3abecf;
+}
+body.light .post .content h6 {
+    color: #3abecf;
+}
+body.light .post .title {
+    color: #3abecf;
+    margin-bottom: 0;
+}
+body.light .post .content a:hover {
+    color: #3abecf;
+}
+body.light .social-link:hover {
+    color: #3abecf;
+}
+body.light .nav-item-title:hover {
+    color: #3abecf;
+}
+body.light .tag a:hover {
+    color: #3abecf;
+}
+body.light .post-preview .title a {
+    color: #3abecf;
+}
+body.light .content-item a:hover {
+    text-decoration: underline;
+    color: #3abecf;
+}
+body.light .post-list .title {
+    color: #3abecf;
+}
+
+body.light .tombstone {
+    color: #3abecf;
+}
+
+.inline {
+    display: inline;
+}
+
+blockquote > p {
+    margin-left: 10px;
+}
+
+.language-shell .hljs-meta {
+    user-select: none; /* don't allow users to select $ in shell */
+}
+
+img:not([width]) { /* set images to take up the full width, unless I specify a width on them */
+    width: 100%;
+}
+
+kbd {
+    background-color: #444;
+    color: #c8d1b8;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 3px solid #aaa;
+}
+
+.follow-up {
+    background-color: #242424;
+    color: #d2f495;
+    padding: 0.5em;
+}
+
+            .hljs-comment,
+.hljs-quote
+{
+  color: #456b7c; /* darker version of background */
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion
+{
+  color: #5dcdfd; /* faded light blue */
+}
+
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link,
+.hljs-subst
+{
+  color: #35ddff; /* bright aqua */
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition
+{
+  color: #13CE00; /* verdant green */
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-attribute
+{
+  color: #96FF00; /* yellow green */
+}
+
+.hljs-keyword,
+.hljs-selector-tag
+{
+  color: #1ea8fc; /* cerulean */
+}
+
+.hljs
+{
+  display: block;
+  overflow-x: auto;
+  background: #19272d;
+  color: #b6ced8;
+  padding: 0.5em;
+  font-family: "Source Code Pro", "Consolas", monospace;
+}
+
+.hljs-emphasis
+{
+  font-style: italic;
+}
+
+.hljs-strong
+{
+  font-weight: bold;
+}
+
+        </style>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap">
+        <link rel="stylesheet" href="https://use.typekit.net/uvh1qwh.css">
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body class="dark">
+        <div class="wrapper">
+            <header>
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a href="/">The Reactor Core</a>
+                    </h1>
+                    <small>Where the engineers hang out</small>
+                </div>
+                <h2 class="nav">
+                    <a href="/about">About</a>
+                </h2>
+            </header>
+            <hr />
+            <main>
+                <div class="post">
+    <h1 class="title">14 - Formik - Painless React Forms</h1>
+    <small>Published 2023-10-24</small>
+    <section class="content">
+        <p>I recently underwent a big form rewrite. Our app is react based, and the best library for react forms is called Formik. Today I'd like to discuss why it's great.</p>
+<h2>What is Formik?</h2>
+<p>But first: what is formik? Formik is what you'd come up with if you built 100 forms in react and extracted what's useful from the react code for all of them. <a href="https://formik.org/docs/overview">The website</a> describes it by saying:</p>
+<blockquote>
+<p>Formik is a small library that helps you with the 3 most annoying parts [of writing forms in react]:</p>
+<ol>
+<li>Getting values in and out of form state</li>
+<li>Validation and error messages</li>
+<li>Handling form submission</li>
+</ol>
+</blockquote>
+<p>I won't go into a bunch of code examples showing before and after, since the docs do exactly that. Definitely start there. That said, I will go over these three things.</p>
+<h3>Getting values in and out of form state</h3>
+<p>In formik, there is a long lived piece of react state called <code>values</code>. Values is what the name says, the values of the inputs that make up your form. Formik gives you utilities to help you read and keep that state up to date.</p>
+<p><code>setFieldValue</code> will let you set the value of an individual field by name. This is probably a good time to talk about some expectations. I expect that forms:</p>
+<ul>
+<li>are wrapped in a <code>&lt;form&gt;</code> tag</li>
+<li>are made up of one or more <code>&lt;input&gt;</code>s, each of which have a name and a label</li>
+<li>have one (and preferably only one) submit button</li>
+<li>have zero or one cancel/reset buttons</li>
+</ul>
+<p>That second bullet point is important here. If you have no inputs (or selects), you don't have a form. If your inputs don't have names, you don't have a good form. If your inputs don't have labels, you don't have an accessible form. And especially for checkboxes and radios, even sighted users rely on the labels because you can click/tap them to check the boxes.</p>
+<h3>Validation and error messages</h3>
+<h3>Handling form submission</h3>
+<h2>useField and Friends</h2>
+<h2>Multi-page forms</h2>
+<h2>Formik Debug</h2>
+
+        <span class="tombstone">&#9670;</span>
+    </section>
+</div>
+
+            </main>
+            <footer>
+                <!-- TODO: Add some content to my footer -->
+            </footer>
+        </div>
+    </body>
+</html>
