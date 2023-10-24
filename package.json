@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/calebmeyer/The-Reactor-Core#readme",
   "devDependencies": {
-    "@11ty/eleventy": "^0.10.0"
+    "@11ty/eleventy": "^2.0"
+  },
+  "dependencies": {
+    "@11ty/eleventy-upgrade-help": "1"
   }
 }
