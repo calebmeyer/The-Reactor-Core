@@ -74,3 +74,39 @@ describe('File under test', () => {
     // actual tests go here
 });
 ```
+
+## Sidestepping the issue entirely with promises
+
+Thanks to my excellent coworker Michael Poole, I found out that there is a better way. Instead of passing in callbacks, you can use promises! `useMutation`'s returned mutation function is a promise. So you can call it like this:
+
+```javascript
+const [addToList] = useMutation(mutationText);
+const onError = (error) => {
+  console.error(error);
+  throw error;
+};
+
+addToList(variables).then(updateShoppingList).catch(onError);
+```
+
+And that means you can test it with a mock resolve/reject:
+
+```javascript
+import { useMutation } from "@apollo/client";
+
+jest.mock("@apollo/client");
+
+describe("when the mutation succeeds", () => {
+  let addMock;
+  beforeEach(() => {
+    // arrange
+    // or mockRejectedValue if the call should fail
+    addMock = jest.fn().mockResolvedValue("blah");
+    useMutation.mockImplementation(() => [addMock]);
+
+    // act
+  });
+
+  // assert
+});
+```
