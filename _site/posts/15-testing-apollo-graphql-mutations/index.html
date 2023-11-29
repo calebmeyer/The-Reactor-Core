@@ -432,84 +432,74 @@ kbd {
             </header>
             <hr />
             <main>
-                <h2>Posts</h2>
-<ul><li class="post-preview">
-            <h3 class="inline"><a href="/posts/15-testing-apollo-graphql-mutations/">15 - Testing Apollo GraphQL Mutations</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2023-11-29</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/13-setting-up-vagrant-with-fish-and-rust/">13 - Setting up Vagrant with Fish and Rust</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2023-03-06</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/12-you-should-use-a-commit-per-change/">12 - You should use a commit per change</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2021-05-20</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/11-using-postman-in-unconventional-ways/">11 - Using Postman in Unconventional Ways</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2021-04-29</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/10-meta-writing/">10 - Meta Writing</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-09-10</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/9-learning-piano/">9 - Learning Piano</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-08-09</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/8-ruby-s-less-than-less-than-operator/">8 - Ruby's Less Than Less Than Operator</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-06-18</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/7-vim-macros-for-people-who-barely-know-what-either-of-those-are/">7 - Vim Macros For People Who Barely Know What Either of Those Are</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-06-11</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/6-Monster-Train/">6 - Monster Train</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-06-04</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/5-atom-learning-lessons/">5 - Atom is learning the lessons of all of the above</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-05-05</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/4-coronavirus/">4 - Coronavirus</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-04-26</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/3-independently-developed-games/">3 - Indie Games</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-04-21</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/2-the-friendly-interactive-shell/">2 - The Friendly Interactive Shell</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-04-14</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/1-react-hooks-with-ajax-validations/">1 - React Hooks and Ajax Validations</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-03-30</em>
-        </li>
-    <li class="post-preview">
-            <h3 class="inline"><a href="/posts/0-starting-a-blog/">0 - Starting a Blog</a></h3>
-            <span>&nbsp;-&nbsp;</span>
-            <em>Published 2020-03-29</em>
-        </li>
-    
-</ul>
+                <div class="post">
+    <h1 class="title">15 - Testing Apollo GraphQL Mutations</h1>
+    <small>Published 2023-11-29</small>
+    <section class="content">
+        <p>Recently, I've started working with Apollo's GraphQL implementation for JavaScript. One pattern that you'll sometimes see in GraphQL land is to pass in some callbacks for a mutation's lifecycle:</p>
+<pre><code class="language-javascript">import { gql, useMutation } from &quot;@apollo/client&quot;;
+
+const mutationText = gql`
+  mutation AddToShoppingList {
+    item
+  }
+`;
+const callbacks = {
+  onError: (error) =&gt; {
+    console.error(error);
+    throw error;
+  },
+  onComplete: () =&gt; {
+    updateShoppingList();
+  },
+};
+
+const [addToList, { loading }] = useMutation(mutationText, callbacks);
+</code></pre>
+<h2>Testing with Jest</h2>
+<p>Over on the testing side, it's very easy to validate some of this. For example, if you want to test that useMutation was called with the correct text and callbacks, you can do something like this:</p>
+<pre><code class="language-javascript">it(&quot;calls useMutation with the correct mutation and callbacks&quot;, () =&gt; {
+  expect(useMutation).toHaveBeenCalledWith(mutationText, {
+    onError: expect.any(Function),
+    onComplete: expect.any(Function),
+  });
+});
+</code></pre>
+<p>But it stumped me for a long while how I could test that onError was called, or that onComplete was called. Today, I figured it out thanks to some clever hacks to test redux.</p>
+<p>If you do an <code>import *</code> in your test file, you can <code>jest.spyOn</code> its functions. If you change <code>useMutation</code> to be spied upon, you can add your own mock implementation. That mock implementation can call your callbacks. In action, it looks like this:</p>
+<pre><code class="language-javascript">import * as apolloClient from '@apollo/client';
+
+describe('File under test', () =&gt; {
+    let addMock;
+
+    beforeEach(() =&gt; {
+        addMock = jest.fn();
+
+        jest.spyOn(apolloClient, 'useMutation').mockImplementation((mutation, callbacks) =&gt; {
+            if (callbacks.onError) {
+                try {
+                    // call the real onError handler for coverage
+                    callbacks.onError(new Error());
+                }
+            }
+
+            if (callbacks.onComplete) {
+                // call the real onComplete handler for coverage
+                callbacks.onComplete();
+            }
+
+            // it's important that we return what the useMutation call is expecting
+            return [addMock, { loading: true }];
+        });
+    });
+
+    // actual tests go here
+});
+</code></pre>
+
+        <span class="tombstone">&#9670;</span>
+    </section>
+</div>
 
             </main>
             <footer>
