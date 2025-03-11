@@ -1,40 +1,51 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>The Reactor Core</title>
-        <style media="screen">
-            {% include "base-styles.css.scss.liquid" %}
-            {% include "syntax-colors.css.scss.liquid" %}
-        </style>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Reactor Core</title>
+    <style media="screen">
+      {% include "base-styles.css.scss.liquid" %}
+      {% include "syntax-colors.css.scss.liquid" %}
+    </style>
 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap">
-        <link rel="stylesheet" href="https://use.typekit.net/uvh1qwh.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap">
+    <link rel="stylesheet" href="https://use.typekit.net/uvh1qwh.css">
 
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-    </head>
-    <body class="dark">
-        <div class="wrapper">
-            <header>
-                <div class="site-title-wrapper">
-                    <h1 class="site-title">
-                        <a href="/">The Reactor Core</a>
-                    </h1>
-                    <small>Where the engineers hang out</small>
-                </div>
-                <h2 class="nav">
-                    <a href="/about">About</a>
-                </h2>
-            </header>
-            <hr />
-            <main>
-                {{ content }}
-            </main>
-            <footer>
-                <!-- TODO: Add some content to my footer -->
-            </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+
+    <script>
+      hljs.highlightAll();
+    </script>
+  </head>
+  <body class="dark">
+    <div class="wrapper">
+      <header>
+        <div class="site-title-wrapper">
+          <h1 class="site-title">
+            <a href="/">The Reactor Core</a>
+          </h1>
+          <small>Where the engineers hang out</small>
         </div>
-    </body>
+        <h2 class="nav">
+          <a href="/about">About</a>
+        </h2>
+      </header>
+      <hr/>
+      <main>
+        {{ content }}
+      </main>
+      <footer>
+        <!-- TODO: Add some content to my footer -->
+      </footer>
+    </div>
+  </body>
 </html>
