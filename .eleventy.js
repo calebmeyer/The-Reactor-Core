@@ -1,4 +1,5 @@
 module.exports = function (eleventyConfig) {
+  eleventyConfig.addPlugin(require("@11ty/eleventy-upgrade-help"))
   return {
     dir: {
       input: "./source",

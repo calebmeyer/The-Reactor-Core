@@ -430,7 +430,7 @@ kbd {
                     <a href="/about">About</a>
                 </h2>
             </header>
-            <hr />
+            <hr>
             <main>
                 <div class="post">
     <h1 class="title">15 - Testing Apollo GraphQL Mutations</h1>
@@ -494,6 +494,35 @@ describe('File under test', () =&gt; {
     });
 
     // actual tests go here
+});
+</code></pre>
+<h2>Sidestepping the issue entirely with promises</h2>
+<p>Thanks to my excellent coworker Michael Poole, I found out that there is a better way. Instead of passing in callbacks, you can use promises! <code>useMutation</code>'s returned mutation function is a promise. So you can call it like this:</p>
+<pre><code class="language-javascript">const [addToList] = useMutation(mutationText);
+const onError = (error) =&gt; {
+  console.error(error);
+  throw error;
+};
+
+addToList(variables).then(updateShoppingList).catch(onError);
+</code></pre>
+<p>And that means you can test it with a mock resolve/reject:</p>
+<pre><code class="language-javascript">import { useMutation } from &quot;@apollo/client&quot;;
+
+jest.mock(&quot;@apollo/client&quot;);
+
+describe(&quot;when the mutation succeeds&quot;, () =&gt; {
+  let addMock;
+  beforeEach(() =&gt; {
+    // arrange
+    // or mockRejectedValue if the call should fail
+    addMock = jest.fn().mockResolvedValue(&quot;blah&quot;);
+    useMutation.mockImplementation(() =&gt; [addMock]);
+
+    // act
+  });
+
+  // assert
 });
 </code></pre>
 
